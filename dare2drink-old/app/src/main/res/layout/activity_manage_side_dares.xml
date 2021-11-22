@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/lib/com.studios.stealth.dare2drink"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_manage_side_dares"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.studios.stealth.dare2drinkFree.ManageSideDaresActivity">
+    <include android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/side_dares_list"></include>
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fabSize="mini"
+        app:srcCompat="@android:drawable/ic_menu_add"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/addSideDare"
+        app:backgroundTint="#000000"
+        app:elevation="0dp" />
+</RelativeLayout>

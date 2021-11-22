@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_settings"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+    tools:context="com.studios.stealth.dare2drinkFree.SettingsActivity"
+    android:weightSum="10">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical"
+        android:id="@+id/wcc"
+        android:layout_marginBottom="10dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="WildCard Chance"
+            android:id="@+id/settingsWildCardTextView"
+            android:textSize="18dp"
+            android:textColor="#000000"/>
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:id="@+id/settingsWildCardSeekBar"
+            android:max="10"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/sep1"
+        android:orientation="horizontal"
+        android:layout_below="@id/wcc"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp">
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#83838383"
+            android:layout_weight="9">
+
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout android:id="@+id/manageSideDares"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/sep1">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:text="Side dares"
+            android:textSize="18dp"
+            android:textColor="#000000"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/sep2"
+        android:orientation="horizontal"
+        android:layout_below="@id/manageSideDares"
+        android:layout_marginBottom="20dp">
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#83838383"
+            android:layout_weight="9">
+
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout android:id="@+id/checkForUpdates"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/sep2">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:text="Check For Updates"
+            android:textSize="18dp"
+            android:textColor="#000000"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/sep3"
+        android:orientation="horizontal"
+        android:layout_below="@id/checkForUpdates"
+        android:layout_marginBottom="20dp">
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#83838383"
+            android:layout_weight="9">
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <Button
+        android:text="Apply"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/apply_settings"
+        android:background="@drawable/button"
+        android:textColor="#ffffff"
+        android:elevation="1dp"
+        android:visibility="gone"
+        />
+</RelativeLayout>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/lib/com.studios.stealth.dare2drink"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="400dp"
+    android:layout_height="600dp"
+    android:layout_marginBottom="50dp"
+    android:orientation="vertical"
+    android:background="#ff7777"
+    android:backgroundTint="#ff7777">
+
+    <android.support.v7.widget.CardView
+        android:orientation="vertical"
+        android:background="#ff7777"
+        app:cardBackgroundColor="#ff7777"
+        android:backgroundTint="#ff7777"
+        android:layout_width="318dp"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:id="@+id/wildcardview"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="4dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_height="494dp"
+        android:layout_marginRight="0dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/wildtext"
+                android:layout_width="291dp"
+                android:layout_height="136dp"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:textAlignment="center" />
+            <TextView
+                android:id="@+id/subtextwild"
+                android:layout_width="195dp"
+                android:layout_height="76dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18dp"
+                android:textAlignment="center"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:textStyle="normal"
+                android:layout_margin="10dp"
+                android:layout_marginTop="0dp" />
+            <TextView
+                android:id="@+id/wildtextshots"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:textAlignment="center">
+
+            </TextView>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</FrameLayout>
