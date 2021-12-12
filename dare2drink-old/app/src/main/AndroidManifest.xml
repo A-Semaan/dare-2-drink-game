@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.studios.stealth.dare2drinkFree">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-sdk android:minSdkVersion="21"
+        android:targetSdkVersion="27"
+        android:maxSdkVersion="28" />
+
+    <application
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/icon"
+        android:isGame="true"
+        android:label="@string/app_name"
+        android:resizeableActivity="true"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-6136998548207096~6232367406"/>
+        <activity
+            android:name="com.studios.stealth.dare2drinkFree.MainActivity"
+            android:icon="@drawable/icon">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.studios.stealth.dare2drinkFree.insideGame"
+            android:parentActivityName="com.studios.stealth.dare2drinkFree.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.studios.stealth.dare2drinkFree.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.studios.stealth.dare2drinkFree.FlipCoin"
+            android:parentActivityName="com.studios.stealth.dare2drinkFree.insideGame">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.studios.stealth.dare2drinkFree.insideGame" />
+        </activity>
+        <activity
+            android:name="com.studios.stealth.dare2drinkFree.SettingsActivity"
+            android:parentActivityName="com.studios.stealth.dare2drinkFree.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.studios.stealth.dare2drinkFree.MainActivity" />
+        </activity>
+        <activity android:name="com.studios.stealth.dare2drinkFree.ManageSideDaresActivity" />
+        <activity android:name="com.studios.stealth.dare2drinkFree.EditSideDareActivity" />
+        <activity android:name="com.studios.stealth.dare2drinkFree.AddSideDareActivity"></activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Dare 2 Drink Free</string>
+    <string-array name="Levels">
+        <item>Select Level</item>
+        <item>Beginner</item>
+        <item>Intermediate</item>
+        <item>Horny Mfs</item>
+    </string-array>
+    <string-array name="Types">
+        <item>Select Type</item>
+        <item>dare</item>
+        <item>Wild Card</item>
+    </string-array>
+    <string-array name="amounts">
+        <item>Select Amount</item>
+        <item>1 shot</item>
+        <item>2 shots</item>
+        <item>3 shots</item>
+        <item>4 shots</item>
+        <item>1 Full cup</item>
+        <item>2 Full cups</item>
+    </string-array>
+</resources>
