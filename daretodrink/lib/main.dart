@@ -1,3 +1,4 @@
+import 'package:daretodrink/globals.dart';
 import 'package:daretodrink/layouts/main-page.dart';
 import 'package:daretodrink/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +30,27 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: MainPage(),
+    return Scaffold(
+      body: FutureBuilder(
+          future: dbManager.init(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(snapshot.error.toString()),
+              );
+            } else if (!snapshot.hasData &&
+                snapshot.connectionState != ConnectionState.done) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasData) {
+              return const MainPage();
+            } else {
+              return const Center(
+                child: Text("Something went wrong"),
+              );
+            }
+          }),
     );
   }
 }
