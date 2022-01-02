@@ -32,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-          future: dbManager.init(),
+          future: _initAndConnect(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return Center(
@@ -52,5 +52,16 @@ class _MyHomePageState extends State<MyHomePage> {
             }
           }),
     );
+  }
+
+  Future _initAndConnect() async {
+    try {
+      await dbManager.init();
+      await dbManager.connectToDataBase();
+      return true;
+    } catch (e) {
+      print(e);
+      throw e;
+    }
   }
 }
