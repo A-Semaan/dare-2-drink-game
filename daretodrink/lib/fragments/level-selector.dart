@@ -14,53 +14,59 @@ class LevelSelector extends StatefulWidget {
 class _LevelSelectorState extends State<LevelSelector> {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      physics: const BouncingScrollPhysics(),
-      shrinkWrap: true,
-      children: [
-        Card(
-          child: ListTile(
-            style: Theme.of(context).listTileTheme.style,
-            title: const Text(
-              "Beginner",
-              textAlign: TextAlign.center,
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.8,
+      child: ListView(
+        physics: const BouncingScrollPhysics(),
+        shrinkWrap: true,
+        children: [
+          Card(
+            child: ListTile(
+              style: Theme.of(context).listTileTheme.style,
+              title: const Text(
+                "Beginner",
+                textAlign: TextAlign.center,
+              ),
+              onTap: () async {
+                List<CardModel> cards =
+                    await dbManager.getCardsAndGenericsForLevel(Level.beginner);
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return CardDeckPage(cards);
+                }));
+              },
             ),
-            onTap: () async {
-              List<CardModel> cards =
-                  await dbManager.getCardsAndGenericsForLevel(Level.beginner);
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return CardDeckPage(cards);
-              }));
-            },
           ),
-        ),
-        Card(
-          child: ListTile(
-            style: Theme.of(context).listTileTheme.style,
-            title: const Text("Intermediate", textAlign: TextAlign.center),
-            onTap: () async {
-              List<CardModel> cards = await dbManager
-                  .getCardsAndGenericsForLevel(Level.intermediate);
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return CardDeckPage(cards);
-              }));
-            },
+          Card(
+            child: ListTile(
+              style: Theme.of(context).listTileTheme.style,
+              title: const Text("Intermediate", textAlign: TextAlign.center),
+              onTap: () async {
+                List<CardModel> cards = await dbManager
+                    .getCardsAndGenericsForLevel(Level.intermediate);
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return CardDeckPage(cards);
+                }));
+              },
+            ),
           ),
-        ),
-        Card(
-          child: ListTile(
-            style: Theme.of(context).listTileTheme.style,
-            title: const Text("Horny MFs", textAlign: TextAlign.center),
-            onTap: () async {
-              List<CardModel> cards =
-                  await dbManager.getCardsAndGenericsForLevel(Level.hornyMFs);
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return CardDeckPage(cards);
-              }));
-            },
+          Card(
+            child: ListTile(
+              style: Theme.of(context).listTileTheme.style,
+              title: const Text("Horny MFs", textAlign: TextAlign.center),
+              onTap: () async {
+                List<CardModel> cards =
+                    await dbManager.getCardsAndGenericsForLevel(Level.hornyMFs);
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return CardDeckPage(cards);
+                }));
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

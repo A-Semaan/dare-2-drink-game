@@ -72,14 +72,18 @@ class DBManager {
     List<Map<String, Object?>> result = await db.query(table);
     cards.addAll(result.map((e) => CardModel(
         getString(e["text"])!, getEnum<CardType>(e["type"])!,
-        amount: getInt(e["amount"]), subText: getString(e["subtext"]))));
+        amount: getInt(e["amount"]),
+        subText: getString(e["subtext"]),
+        level: level)));
 
     //get cards from side dares
     List<Map<String, Object?>> result2 = await db
         .query("side_dares", where: "level = ?", whereArgs: [level.toInt()]);
     cards.addAll(result2.map((e) => CardModel(
         getString(e["text"])!, getEnum<CardType>(e["type"])!,
-        amount: getInt(e["amount"]), subText: getString(e["subtext"]))));
+        amount: getInt(e["amount"]),
+        subText: getString(e["subtext"]),
+        level: level)));
 
     return cards;
   }
