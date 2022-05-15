@@ -39,7 +39,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   sqflite: ^2.0.1
-  flutter_tindercard: ^0.2.0
+  swipe_cards: ^1.0.0
+  google_fonts: ^2.3.2
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -63,6 +64,7 @@ flutter:
   assets:
     - assets/background.png
     - assets/dare2drink.db
+    - assets/google_fonts/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -20,12 +20,14 @@ class _LevelSelectorState extends State<LevelSelector> {
         physics: const BouncingScrollPhysics(),
         shrinkWrap: true,
         children: [
-          Card(
+          Padding(
+            padding: EdgeInsets.all(8.0),
             child: ListTile(
               style: Theme.of(context).listTileTheme.style,
-              title: const Text(
+              title: Text(
                 "Beginner",
                 textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.displayMedium,
               ),
               onTap: () async {
                 List<CardModel> cards =
@@ -37,10 +39,15 @@ class _LevelSelectorState extends State<LevelSelector> {
               },
             ),
           ),
-          Card(
+          Padding(
+            padding: EdgeInsets.all(8.0),
             child: ListTile(
               style: Theme.of(context).listTileTheme.style,
-              title: const Text("Intermediate", textAlign: TextAlign.center),
+              title: Text(
+                "Intermediate",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.displayMedium,
+              ),
               onTap: () async {
                 List<CardModel> cards = await dbManager
                     .getCardsAndGenericsForLevel(Level.intermediate);
@@ -51,10 +58,15 @@ class _LevelSelectorState extends State<LevelSelector> {
               },
             ),
           ),
-          Card(
+          Padding(
+            padding: EdgeInsets.all(8.0),
             child: ListTile(
               style: Theme.of(context).listTileTheme.style,
-              title: const Text("Horny MFs", textAlign: TextAlign.center),
+              title: Text(
+                "Horny MFs",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.displayMedium,
+              ),
               onTap: () async {
                 List<CardModel> cards =
                     await dbManager.getCardsAndGenericsForLevel(Level.hornyMFs);

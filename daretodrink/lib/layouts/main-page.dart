@@ -41,16 +41,16 @@ class _MainPageState extends State<MainPage> {
                       content: const LevelSelector(),
                       title: Text(
                         "Select Level",
-                        style: Theme.of(context).textTheme.headline4,
+                        style: Theme.of(context).textTheme.bodyMedium,
                         textAlign: TextAlign.center,
                       ),
                     );
                     return dialog;
                   });
             },
-            child: const Text(
+            child: Text(
               "Start",
-              style: TextStyle(color: Colors.white),
+              style: Theme.of(context).textTheme.displaySmall,
             ),
           ),
           OutlinedButton(
