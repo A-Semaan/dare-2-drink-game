@@ -1,4 +1,5 @@
 import 'package:daretodrink/data/card-model.dart';
+import 'package:daretodrink/db-ops/db-manager.dart';
 import 'package:daretodrink/globals.dart';
 import 'package:daretodrink/layouts/card-deck-page.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class _LevelSelectorState extends State<LevelSelector> {
               ),
               onTap: () async {
                 List<CardModel> cards =
-                    await dbManager.getCardsAndGenericsForLevel(Level.beginner);
+                    await DBManager.instance.getCardsAndGenericsForLevel(Level.beginner);
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
                   return CardDeckPage(cards);
@@ -49,7 +50,7 @@ class _LevelSelectorState extends State<LevelSelector> {
                 style: Theme.of(context).textTheme.displayMedium,
               ),
               onTap: () async {
-                List<CardModel> cards = await dbManager
+                List<CardModel> cards = await DBManager.instance
                     .getCardsAndGenericsForLevel(Level.intermediate);
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
@@ -69,7 +70,7 @@ class _LevelSelectorState extends State<LevelSelector> {
               ),
               onTap: () async {
                 List<CardModel> cards =
-                    await dbManager.getCardsAndGenericsForLevel(Level.hornyMFs);
+                    await DBManager.instance.getCardsAndGenericsForLevel(Level.hornyMFs);
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
                   return CardDeckPage(cards);

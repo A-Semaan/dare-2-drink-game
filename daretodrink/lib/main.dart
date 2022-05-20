@@ -1,4 +1,6 @@
+import 'package:daretodrink/db-ops/db-manager.dart';
 import 'package:daretodrink/globals.dart';
+import 'package:daretodrink/helpers/shared_preferences_helper.dart';
 import 'package:daretodrink/layouts/main-page.dart';
 import 'package:daretodrink/theme/theme.dart';
 import 'package:flutter/foundation.dart';
@@ -19,6 +21,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SharedPreferencesHelper.instance.init();
     return MaterialApp(
       theme: MyTheme.getThemeData(),
       home: const MyHomePage(),
@@ -62,8 +65,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future _initAndConnect() async {
     try {
-      await dbManager.init();
-      await dbManager.connectToDataBase();
+      await DBManager.instance.init();
+      await DBManager.instance.connectToDataBase();
       return true;
     } catch (e) {
       print(e);

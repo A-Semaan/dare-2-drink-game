@@ -7,9 +7,7 @@ class ApplicationProperties {
   static final ApplicationProperties _instance =
       ApplicationProperties._internal();
 
-  factory ApplicationProperties() {
-    return _instance;
-  }
+  static ApplicationProperties get instance => ApplicationProperties._instance;
 
   //properties
   final BorderRadius borderRadius = BorderRadius.circular(10);

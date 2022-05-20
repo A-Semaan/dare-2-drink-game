@@ -48,7 +48,7 @@ class MyTheme {
         ),
         cardTheme: CardTheme(
           shape: RoundedRectangleBorder(
-              borderRadius: applicationProperties.borderRadius),
+              borderRadius: ApplicationProperties.instance.borderRadius),
           color: Colors.grey[700],
           margin: const EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
           elevation: 2,
@@ -58,7 +58,7 @@ class MyTheme {
             textColor: Colors.white,
             shape: RoundedRectangleBorder(
                 side: const BorderSide(color: _primaryColor),
-                borderRadius: applicationProperties.borderRadius)));
+                borderRadius: ApplicationProperties.instance.borderRadius)));
   }
 
   static const Color _primaryColor = Color.fromARGB(170, 250, 50, 50);

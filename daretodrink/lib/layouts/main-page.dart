@@ -1,8 +1,8 @@
 import 'package:daretodrink/data/application-properties.dart';
 import 'package:daretodrink/fragments/level-selector.dart';
 import 'package:daretodrink/globals.dart';
+import 'package:daretodrink/layouts/settings_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -35,7 +35,7 @@ class _MainPageState extends State<MainPage> {
                   builder: (context) {
                     AlertDialog dialog = AlertDialog(
                       shape: RoundedRectangleBorder(
-                          borderRadius: applicationProperties.borderRadius),
+                          borderRadius: ApplicationProperties.instance.borderRadius),
                       titleTextStyle: TextStyle(
                           color: Theme.of(context).listTileTheme.textColor),
                       content: const LevelSelector(),
@@ -61,7 +61,12 @@ class _MainPageState extends State<MainPage> {
               child: const Text("State The Rules")),
           OutlinedButton(
               style: Theme.of(context).outlinedButtonTheme.style,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: ((context) {
+                  return SettingsPage();
+                })));
+              },
               child: const Text("Settings"))
         ]),
       ),
@@ -75,7 +80,7 @@ class _MainPageState extends State<MainPage> {
         builder: (context) {
           AlertDialog dialog = AlertDialog(
               shape: RoundedRectangleBorder(
-                  borderRadius: applicationProperties.borderRadius),
+                  borderRadius: ApplicationProperties.instance.borderRadius),
               title: const Text("The Rules"),
               content: SizedBox(
                 height: _size.height * 0.5,

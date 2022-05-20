@@ -8,13 +8,11 @@ import 'package:path/path.dart';
 
 class DBManager {
   //Singleton
-  static final DBManager _instance = DBManager._internal();
-
   DBManager._internal();
 
-  factory DBManager() {
-    return _instance;
-  }
+  static final DBManager _instance = DBManager._internal();
+
+  static DBManager get instance => DBManager._instance;
 
   //properties
 

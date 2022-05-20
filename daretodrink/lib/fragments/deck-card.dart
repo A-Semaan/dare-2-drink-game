@@ -1,3 +1,4 @@
+import 'package:daretodrink/data/application-properties.dart';
 import 'package:daretodrink/data/card-model.dart';
 import 'package:daretodrink/fragments/dare-2-drink-footer.dart';
 import 'package:daretodrink/globals.dart';
@@ -18,7 +19,7 @@ class Deck_CardState extends State<DeckCard> {
     return Card(
       shape: RoundedRectangleBorder(
           side: BorderSide(color: MyTheme.getThemeData().primaryColor),
-          borderRadius: applicationProperties.borderRadius),
+          borderRadius: ApplicationProperties.instance.borderRadius),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
