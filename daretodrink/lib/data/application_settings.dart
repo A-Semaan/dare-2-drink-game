@@ -19,7 +19,7 @@ class ApplicationSettings {
     }
 
     int? chance = SharedPreferencesHelper.instance
-        .read(ApplicationSettingsEnum.wildCardChance.asString());
+        .read<int>(ApplicationSettingsEnum.wildCardChance.asString());
 
     _wildCardChance = chance ?? 40;
 

@@ -22,17 +22,19 @@ class _LevelSelectorState extends State<LevelSelector> {
         shrinkWrap: true,
         children: [
           Padding(
-            padding: EdgeInsets.all(8.0),
-            child: ListTile(
-              style: Theme.of(context).listTileTheme.style,
-              title: Text(
-                "Beginner",
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.displayMedium,
+            padding: const EdgeInsets.all(8.0),
+            child: OutlinedButton(
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Text(
+                  "Beginner",
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.displayMedium,
+                ),
               ),
-              onTap: () async {
-                List<CardModel> cards =
-                    await DBManager.instance.getCardsAndGenericsForLevel(Level.beginner);
+              onPressed: () async {
+                List<CardModel> cards = await DBManager.instance
+                    .getCardsAndGenericsForLevel(Level.beginner);
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
                   return CardDeckPage(cards);
@@ -42,14 +44,16 @@ class _LevelSelectorState extends State<LevelSelector> {
           ),
           Padding(
             padding: EdgeInsets.all(8.0),
-            child: ListTile(
-              style: Theme.of(context).listTileTheme.style,
-              title: Text(
-                "Intermediate",
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.displayMedium,
+            child: OutlinedButton(
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Text(
+                  "Intermediate",
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.displayMedium,
+                ),
               ),
-              onTap: () async {
+              onPressed: () async {
                 List<CardModel> cards = await DBManager.instance
                     .getCardsAndGenericsForLevel(Level.intermediate);
                 Navigator.of(context)
@@ -61,16 +65,18 @@ class _LevelSelectorState extends State<LevelSelector> {
           ),
           Padding(
             padding: EdgeInsets.all(8.0),
-            child: ListTile(
-              style: Theme.of(context).listTileTheme.style,
-              title: Text(
-                "Horny MFs",
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.displayMedium,
+            child: OutlinedButton(
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Text(
+                  "Horny MFs",
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.displayMedium,
+                ),
               ),
-              onTap: () async {
-                List<CardModel> cards =
-                    await DBManager.instance.getCardsAndGenericsForLevel(Level.hornyMFs);
+              onPressed: () async {
+                List<CardModel> cards = await DBManager.instance
+                    .getCardsAndGenericsForLevel(Level.hornyMFs);
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
                   return CardDeckPage(cards);

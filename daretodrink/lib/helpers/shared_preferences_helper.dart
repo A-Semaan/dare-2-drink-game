@@ -2,11 +2,12 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesHelper {
-  
   //Singleton
   SharedPreferencesHelper._internal();
-  static final SharedPreferencesHelper _instance = SharedPreferencesHelper._internal();
-  static SharedPreferencesHelper get instance => SharedPreferencesHelper._instance;
+  static final SharedPreferencesHelper _instance =
+      SharedPreferencesHelper._internal();
+  static SharedPreferencesHelper get instance =>
+      SharedPreferencesHelper._instance;
 
   //helper
   late SharedPreferences _prefs;
@@ -15,11 +16,10 @@ class SharedPreferencesHelper {
     _prefs = await SharedPreferences.getInstance();
   }
 
-  dynamic read(String key) {
-    String toGet = _prefs.getString(key) ?? "";
+  T? read<T>(String key) {
+    Object? toGet = _prefs.get(key);
 
-    var item = json.decode(toGet);
-    return item;
+    return toGet == null ? null : jsonDecode(toGet.toString());
   }
 
   Future<bool> save(String key, value) async {

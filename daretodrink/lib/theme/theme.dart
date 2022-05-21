@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class MyTheme {
   static ThemeData getThemeData() {
     return ThemeData(
+        appBarTheme: const AppBarTheme(titleTextStyle: TextStyle(fontSize: 25)),
         primaryColor: _primaryColor,
         brightness: Brightness.dark,
         textTheme: TextTheme(
@@ -54,11 +55,19 @@ class MyTheme {
           elevation: 2,
           clipBehavior: Clip.antiAlias,
         ),
-        listTileTheme: ListTileThemeData(
-            textColor: Colors.white,
-            shape: RoundedRectangleBorder(
-                side: const BorderSide(color: _primaryColor),
-                borderRadius: ApplicationProperties.instance.borderRadius)));
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+            backgroundColor: Color.fromARGB(170, 250, 50, 50),
+            foregroundColor: Colors.white60,
+            extendedTextStyle: TextStyle(
+              fontSize: 18,
+            )),
+        listTileTheme: const ListTileThemeData(
+          textColor: Colors.white,
+
+          // shape: RoundedRectangleBorder(
+          //     side: const BorderSide(color: _primaryColor),
+          //     borderRadius: ApplicationProperties.instance.borderRadius)
+        ));
   }
 
   static const Color _primaryColor = Color.fromARGB(170, 250, 50, 50);
