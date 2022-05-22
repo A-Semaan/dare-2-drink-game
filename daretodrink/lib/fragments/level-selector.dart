@@ -3,7 +3,7 @@ import 'package:daretodrink/db-ops/db-manager.dart';
 import 'package:daretodrink/globals.dart';
 import 'package:daretodrink/layouts/card-deck-page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LevelSelector extends StatefulWidget {
   const LevelSelector({Key? key}) : super(key: key);
@@ -33,12 +33,7 @@ class _LevelSelectorState extends State<LevelSelector> {
                 ),
               ),
               onPressed: () async {
-                List<CardModel> cards = await DBManager.instance
-                    .getCardsAndGenericsForLevel(Level.beginner);
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return CardDeckPage(cards);
-                }));
+                _getCardsAndRedirect(Level.beginner);
               },
             ),
           ),
@@ -54,12 +49,7 @@ class _LevelSelectorState extends State<LevelSelector> {
                 ),
               ),
               onPressed: () async {
-                List<CardModel> cards = await DBManager.instance
-                    .getCardsAndGenericsForLevel(Level.intermediate);
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return CardDeckPage(cards);
-                }));
+                _getCardsAndRedirect(Level.intermediate);
               },
             ),
           ),
@@ -75,17 +65,24 @@ class _LevelSelectorState extends State<LevelSelector> {
                 ),
               ),
               onPressed: () async {
-                List<CardModel> cards = await DBManager.instance
-                    .getCardsAndGenericsForLevel(Level.hornyMFs);
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return CardDeckPage(cards);
-                }));
+                _getCardsAndRedirect(Level.hornyMFs);
               },
             ),
           ),
         ],
       ),
     );
+  }
+
+  _getCardsAndRedirect(Level level) async {
+    List<CardModel> cards =
+        await DBManager.instance.getCardsAndGenericsForLevel(level);
+    if (cards.isEmpty) {
+      Fluttertoast.showToast(msg: "This mode does not have any dares");
+      return;
+    }
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      return CardDeckPage(cards);
+    }));
   }
 }

@@ -2,7 +2,9 @@ import 'package:daretodrink/data/application-properties.dart';
 import 'package:daretodrink/fragments/level-selector.dart';
 import 'package:daretodrink/globals.dart';
 import 'package:daretodrink/layouts/settings_page.dart';
+import 'package:daretodrink/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -26,48 +28,118 @@ class _MainPageState extends State<MainPage> {
       ),
       child: Padding(
         padding: EdgeInsets.only(bottom: size.height * 0.1),
-        child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-          TextButton(
-            style: Theme.of(context).textButtonTheme.style,
-            onPressed: () async {
-              await showDialog(
-                  context: context,
-                  builder: (context) {
-                    AlertDialog dialog = AlertDialog(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: ApplicationProperties.instance.borderRadius),
-                      titleTextStyle: TextStyle(
-                          color: Theme.of(context).listTileTheme.textColor),
-                      content: const LevelSelector(),
-                      title: Text(
-                        "Select Level",
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        textAlign: TextAlign.center,
+        child: Stack(children: [
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 50.0),
+                child: Transform.rotate(
+                  angle: -math.pi / 8,
+                  child: SizedBox(
+                    width: 120,
+                    height: 50,
+                    child: TextButton(
+                      style: Theme.of(context).textButtonTheme.style,
+                      onPressed: () async {
+                        await showDialog(
+                            context: context,
+                            builder: (context) {
+                              AlertDialog dialog = AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: ApplicationProperties
+                                        .instance.borderRadius),
+                                titleTextStyle: TextStyle(
+                                    color: Theme.of(context)
+                                        .listTileTheme
+                                        .textColor),
+                                content: const LevelSelector(),
+                                title: Text(
+                                  "Select Level",
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                  textAlign: TextAlign.center,
+                                ),
+                              );
+                              return dialog;
+                            });
+                      },
+                      child: Text(
+                        "Start",
+                        style: Theme.of(context).textTheme.displaySmall,
                       ),
-                    );
-                    return dialog;
-                  });
-            },
-            child: Text(
-              "Start",
-              style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
-          OutlinedButton(
-              style: Theme.of(context).outlinedButtonTheme.style,
-              onPressed: () {
-                _showRulesDialog();
-              },
-              child: const Text("State The Rules")),
-          OutlinedButton(
-              style: Theme.of(context).outlinedButtonTheme.style,
-              onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: ((context) {
-                  return SettingsPage();
-                })));
-              },
-              child: const Text("Settings"))
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 110.0, left: 30.0),
+                child: SizedBox(
+                  width: 200,
+                  height: 50,
+                  child: Transform.rotate(
+                    angle: -math.pi / 8,
+                    child: OutlinedButton(
+                        style: Theme.of(context)
+                            .outlinedButtonTheme
+                            .style!
+                            .copyWith(
+                                foregroundColor:
+                                    MaterialStateProperty.resolveWith(
+                                        (states) => Colors.black),
+                                side: MaterialStateProperty.resolveWith(
+                                  (states) => const BorderSide(
+                                    color: Colors.black,
+                                  ),
+                                )),
+                        onPressed: () {
+                          _showRulesDialog();
+                        },
+                        child: const Text("State The Rules")),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 50.0, right: 30.0),
+                child: SizedBox(
+                  width: 200,
+                  height: 50,
+                  child: Transform.rotate(
+                    angle: -math.pi / 8,
+                    child: OutlinedButton(
+                        style: Theme.of(context)
+                            .outlinedButtonTheme
+                            .style!
+                            .copyWith(
+                                foregroundColor:
+                                    MaterialStateProperty.resolveWith(
+                                        (states) => MyTheme.secondaryColor),
+                                side: MaterialStateProperty.resolveWith(
+                                  (states) => const BorderSide(
+                                    color: MyTheme.secondaryColor,
+                                  ),
+                                )),
+                        onPressed: () {
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: ((context) {
+                            return SettingsPage();
+                          })));
+                        },
+                        child: const Text("Settings")),
+                  ),
+                ),
+              ),
+            ),
+          )
         ]),
       ),
     );

@@ -37,6 +37,17 @@ enum CardType { dare, generic }
 enum Level { beginner, intermediate, hornyMFs }
 
 extension CardTypeExtension on CardType {
+  static CardType fromString(String value) {
+    switch (value) {
+      case "DARE":
+        return CardType.dare;
+      case "GENERIC":
+        return CardType.generic;
+      default:
+        return CardType.dare;
+    }
+  }
+
   static CardType fromInt(int value) {
     switch (value) {
       case 1:
@@ -45,6 +56,17 @@ extension CardTypeExtension on CardType {
         return CardType.generic;
       default:
         return CardType.dare;
+    }
+  }
+
+  String asString() {
+    switch (this) {
+      case CardType.dare:
+        return "DARE";
+      case CardType.generic:
+        return "GENERIC";
+      default:
+        return "";
     }
   }
 

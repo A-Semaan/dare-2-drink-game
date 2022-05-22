@@ -17,6 +17,8 @@ class Deck_CardState extends State<DeckCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color:
+          widget.card.type == CardType.generic ? MyTheme.secondaryColor : null,
       shape: RoundedRectangleBorder(
           side: BorderSide(color: MyTheme.getThemeData().primaryColor),
           borderRadius: ApplicationProperties.instance.borderRadius),
@@ -36,22 +38,26 @@ class Deck_CardState extends State<DeckCard> {
                   Text(
                     widget.card.subText ?? "",
                     textAlign: TextAlign.center,
-                    style: MyTheme.getThemeData().textTheme.bodySmall,
+                    style: MyTheme.getThemeData().textTheme.bodyMedium,
                   ),
                   Text(" ~ Or ~ ",
                       textAlign: TextAlign.center,
                       style: _addColotToTextStyle(
                           MyTheme.getThemeData().textTheme.headlineMedium!,
-                          Colors.red)),
+                          widget.card.type == CardType.generic
+                              ? MyTheme.getThemeData().primaryColor
+                              : MyTheme.secondaryColor)),
                   Text(
-                    "Drink " + _getAmount(widget.card.amount!),
+                    widget.card.amount == null
+                        ? "Fuck You"
+                        : "Drink " + _getAmount(widget.card.amount!),
                     textAlign: TextAlign.center,
                     style: MyTheme.getThemeData().textTheme.headlineMedium,
                   ),
                 ],
               ),
             ),
-            const Dare2DrinkFooter(),
+            Dare2DrinkFooter(isDefault: widget.card.type == CardType.dare),
           ],
         ),
       ),

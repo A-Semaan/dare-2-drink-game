@@ -46,8 +46,13 @@ class _SettingsPageState extends State<SettingsPage> {
         child: Column(
           children: [
             ListTile(
-              title: Text("Wild Card Chance"),
+              minVerticalPadding: 20,
+              title: const Text(
+                "Wild Card Chance",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
+              ),
               subtitle: Slider(
+                  label: _wildCardChance.toString(),
                   min: 10,
                   max: 100,
                   divisions: 9,

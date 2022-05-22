@@ -109,7 +109,7 @@ class DBManager {
 
   T? getEnum<T>(object) {
     if (T == CardType) {
-      return CardTypeExtension.fromInt(getInt(object)!) as T;
+      return CardTypeExtension.fromString(getString(object)!) as T;
     } else if (T == Level) {
       return LevelExtension.fromInt(getInt(object)!) as T;
     } else {

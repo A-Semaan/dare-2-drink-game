@@ -37,8 +37,7 @@ class MyTheme {
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: ButtonStyle(
               textStyle: MaterialStateProperty.resolveWith((states) =>
-                  const TextStyle(
-                      color: Color.fromARGB(170, 250, 50, 50), fontSize: 18)),
+                  const TextStyle(color: _primaryColor, fontSize: 18)),
               foregroundColor:
                   MaterialStateProperty.resolveWith((states) => _primaryColor),
               side: MaterialStateProperty.resolveWith(
@@ -56,19 +55,23 @@ class MyTheme {
           clipBehavior: Clip.antiAlias,
         ),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
-            backgroundColor: Color.fromARGB(170, 250, 50, 50),
+            backgroundColor: _primaryColor,
             foregroundColor: Colors.white60,
             extendedTextStyle: TextStyle(
               fontSize: 18,
             )),
         listTileTheme: const ListTileThemeData(
-          textColor: Colors.white,
-
-          // shape: RoundedRectangleBorder(
-          //     side: const BorderSide(color: _primaryColor),
-          //     borderRadius: ApplicationProperties.instance.borderRadius)
+          textColor: Colors.white70,
+        ),
+        sliderTheme: const SliderThemeData(
+          valueIndicatorTextStyle: TextStyle(fontSize: 20),
+          valueIndicatorColor: _primaryColor,
+          activeTrackColor: _primaryColor,
+          thumbColor: _primaryColor,
         ));
   }
 
-  static const Color _primaryColor = Color.fromARGB(170, 250, 50, 50);
+  static const Color _primaryColor = Color.fromARGB(
+      255, 7, 88, 183); //Color.fromARGB(170, 250, 50, 50); //old color theme
+  static const Color secondaryColor = Color.fromARGB(255, 212, 175, 55);
 }

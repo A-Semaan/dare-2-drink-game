@@ -29,6 +29,7 @@ class ApplicationSettings {
   set wildCardChance(int value) {
     SharedPreferencesHelper.instance
         .save(ApplicationSettingsEnum.wildCardChance.asString(), value);
+    _wildCardChance = value;
   }
 }
 
