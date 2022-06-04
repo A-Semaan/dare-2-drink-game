@@ -1,4 +1,8 @@
 import 'package:daretodrink/data/application_settings.dart';
+import 'package:daretodrink/fragments/dare-2-drink-footer.dart';
+import 'package:daretodrink/helpers/package_info_helper.dart';
+import 'package:daretodrink/layouts/personalized_dares.dart';
+import 'package:daretodrink/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -28,7 +32,10 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        title: const Text("Settings"),
+        title: const Text(
+          "Settings",
+          style: TextStyle(color: MyTheme.secondaryColor),
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Visibility(
@@ -49,7 +56,7 @@ class _SettingsPageState extends State<SettingsPage> {
               minVerticalPadding: 20,
               title: const Text(
                 "Wild Card Chance",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
+                style: MyTheme.listTileTitleTheme,
               ),
               subtitle: Slider(
                   label: _wildCardChance.toString(),
@@ -62,7 +69,29 @@ class _SettingsPageState extends State<SettingsPage> {
                       _wildCardChance = newValue.toInt();
                     });
                   }),
-            )
+            ),
+            ListTile(
+              minVerticalPadding: 20,
+              title: const Text(
+                "Personalized Dares",
+                style: MyTheme.listTileTitleTheme,
+              ),
+              subtitle: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  "Add your own dares!",
+                  style: MyTheme.listTileSubtitleTheme,
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const PersonalizedDares()));
+              },
+            ),
+            const ListTile(
+              onTap: null,
+              title: Center(child: Dare2DrinkFooter(withVersion: true)),
+            ),
           ],
         ),
       ),

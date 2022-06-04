@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class DeckCard extends StatefulWidget {
   final CardModel card;
-  DeckCard({Key? key, required this.card}) : super(key: key);
+  const DeckCard({Key? key, required this.card}) : super(key: key);
 
   @override
   State<DeckCard> createState() => Deck_CardState();

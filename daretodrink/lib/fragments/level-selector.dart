@@ -75,14 +75,23 @@ class _LevelSelectorState extends State<LevelSelector> {
   }
 
   _getCardsAndRedirect(Level level) async {
-    List<CardModel> cards =
+    List<CardModel> allCards =
         await DBManager.instance.getCardsAndGenericsForLevel(level);
-    if (cards.isEmpty) {
+    if (allCards.isEmpty) {
       Fluttertoast.showToast(msg: "This mode does not have any dares");
       return;
     }
+    List<CardModel> cards = [];
+    List<CardModel> wildCards = [];
+    for (var element in allCards) {
+      if (element.type == CardType.generic) {
+        wildCards.add(element);
+      } else {
+        cards.add(element);
+      }
+    }
     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-      return CardDeckPage(cards);
+      return CardDeckPage(cards, wildCards);
     }));
   }
 }

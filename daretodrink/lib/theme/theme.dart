@@ -5,7 +5,11 @@ import 'package:flutter/material.dart';
 class MyTheme {
   static ThemeData getThemeData() {
     return ThemeData(
-        appBarTheme: const AppBarTheme(titleTextStyle: TextStyle(fontSize: 25)),
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(fontSize: 25),
+          backgroundColor: _primaryColor,
+          foregroundColor: secondaryColor,
+        ),
         primaryColor: _primaryColor,
         brightness: Brightness.dark,
         textTheme: TextTheme(
@@ -29,6 +33,8 @@ class MyTheme {
             bodySmall: TextStyle(fontSize: 16, color: Colors.grey[200])),
         textButtonTheme: TextButtonThemeData(
             style: ButtonStyle(
+          textStyle: MaterialStateProperty.resolveWith(
+              (states) => const TextStyle(color: _primaryColor, fontSize: 18)),
           foregroundColor:
               MaterialStateProperty.resolveWith((states) => Colors.white),
           backgroundColor:
@@ -61,8 +67,7 @@ class MyTheme {
               fontSize: 18,
             )),
         listTileTheme: const ListTileThemeData(
-          textColor: Colors.white70,
-        ),
+            textColor: Colors.white70, style: ListTileStyle.list),
         sliderTheme: const SliderThemeData(
           valueIndicatorTextStyle: TextStyle(fontSize: 20),
           valueIndicatorColor: _primaryColor,
@@ -74,4 +79,9 @@ class MyTheme {
   static const Color _primaryColor = Color.fromARGB(
       255, 7, 88, 183); //Color.fromARGB(170, 250, 50, 50); //old color theme
   static const Color secondaryColor = Color.fromARGB(255, 212, 175, 55);
+
+  static const TextStyle listTileTitleTheme =
+      TextStyle(fontSize: 20, fontWeight: FontWeight.normal);
+  static const TextStyle listTileSubtitleTheme = TextStyle(
+      fontSize: 15, fontWeight: FontWeight.normal, color: Colors.grey);
 }

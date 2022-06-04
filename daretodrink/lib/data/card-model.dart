@@ -1,13 +1,15 @@
 class CardModel {
+  int? id;
   String text;
   String? subText;
   Level? level;
-  CardType type;
+  CardType? type;
   int? amount;
 
   CardModel(
     this.text,
     this.type, {
+    this.id,
     this.subText,
     this.level,
     this.amount,
@@ -18,6 +20,11 @@ class CardModel {
       "text": text,
       "type": type,
     };
+
+    if (id != null) {
+      toReturn["id"] = id;
+    }
+
     if (subText != null) {
       toReturn["subtext"] = subText;
     }
@@ -28,13 +35,15 @@ class CardModel {
       toReturn["amount"] = amount!;
     }
 
+    if (type != null) {
+      toReturn["type"] = type!.asEnumString();
+    }
+
     return toReturn;
   }
 }
 
 enum CardType { dare, generic }
-
-enum Level { beginner, intermediate, hornyMFs }
 
 extension CardTypeExtension on CardType {
   static CardType fromString(String value) {
@@ -59,12 +68,23 @@ extension CardTypeExtension on CardType {
     }
   }
 
-  String asString() {
+  String asEnumString() {
     switch (this) {
       case CardType.dare:
         return "DARE";
       case CardType.generic:
         return "GENERIC";
+      default:
+        return "";
+    }
+  }
+
+  String asString() {
+    switch (this) {
+      case CardType.dare:
+        return "Dare";
+      case CardType.generic:
+        return "Wild card";
       default:
         return "";
     }
@@ -81,6 +101,8 @@ extension CardTypeExtension on CardType {
     }
   }
 }
+
+enum Level { beginner, intermediate, hornyMFs }
 
 extension LevelExtension on Level {
   static Level fromInt(int value) {
@@ -106,6 +128,19 @@ extension LevelExtension on Level {
         return 3;
       default:
         return 1;
+    }
+  }
+
+  String asString() {
+    switch (this) {
+      case Level.beginner:
+        return "Beginner";
+      case Level.intermediate:
+        return "Intermediate";
+      case Level.hornyMFs:
+        return "Horny MFs";
+      default:
+        return "";
     }
   }
 }

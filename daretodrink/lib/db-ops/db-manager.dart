@@ -51,6 +51,16 @@ class DBManager {
     return await db.insert("side_dares", card.toMap());
   }
 
+  Future<int> updateSideDare(CardModel card) async {
+    return await db.update("side_dares", card.toMap(),
+        where: "_id = ?", whereArgs: [card.id]);
+  }
+
+  Future<int> deleteSideDare(CardModel card) async {
+    return await db
+        .delete("side_dares", where: "_id = ?", whereArgs: [card.id]);
+  }
+
   Future<List<CardModel>> getCardsAndGenericsForLevel(Level level) async {
     List<CardModel> cards = [];
     String table = "";
@@ -70,6 +80,7 @@ class DBManager {
     List<Map<String, Object?>> result = await db.query(table);
     cards.addAll(result.map((e) => CardModel(
         getString(e["text"])!, getEnum<CardType>(e["type"])!,
+        id: getInt(e["_id"]),
         amount: getInt(e["amount"]),
         subText: getString(e["subtext"]),
         level: level)));
@@ -79,9 +90,27 @@ class DBManager {
         .query("side_dares", where: "level = ?", whereArgs: [level.toInt()]);
     cards.addAll(result2.map((e) => CardModel(
         getString(e["text"])!, getEnum<CardType>(e["type"])!,
+        id: getInt(e["_id"]),
         amount: getInt(e["amount"]),
         subText: getString(e["subtext"]),
         level: level)));
+
+    return cards;
+  }
+
+  Future<List<CardModel>> getSideGenericsForLevel() async {
+    List<CardModel> cards = [];
+
+    //get cards from side dares
+    List<Map<String, Object?>> result2 = await db.query(
+      "side_dares",
+    );
+    cards.addAll(result2.map((e) => CardModel(
+        getString(e["text"])!, getEnum<CardType>(e["type"])!,
+        id: getInt(e["_id"]),
+        amount: getInt(e["amount"]),
+        subText: getString(e["subtext"]),
+        level: getEnum<Level>(e["level"]))));
 
     return cards;
   }

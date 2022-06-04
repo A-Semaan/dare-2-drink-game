@@ -1,5 +1,6 @@
 import 'package:daretodrink/db-ops/db-manager.dart';
 import 'package:daretodrink/globals.dart';
+import 'package:daretodrink/helpers/package_info_helper.dart';
 import 'package:daretodrink/helpers/shared_preferences_helper.dart';
 import 'package:daretodrink/layouts/main-page.dart';
 import 'package:daretodrink/theme/theme.dart';
@@ -21,7 +22,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    SharedPreferencesHelper.instance.init();
     return MaterialApp(
       theme: MyTheme.getThemeData(),
       home: const MyHomePage(),
@@ -37,6 +37,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  @override
+  void initState() {
+    initResources();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,5 +79,10 @@ class _MyHomePageState extends State<MyHomePage> {
       print(e);
       throw e;
     }
+  }
+
+  initResources() {
+    SharedPreferencesHelper.instance.init();
+    PackageInfoHelper.init();
   }
 }

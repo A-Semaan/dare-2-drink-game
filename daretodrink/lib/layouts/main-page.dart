@@ -49,10 +49,6 @@ class _MainPageState extends State<MainPage> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: ApplicationProperties
                                         .instance.borderRadius),
-                                titleTextStyle: TextStyle(
-                                    color: Theme.of(context)
-                                        .listTileTheme
-                                        .textColor),
                                 content: const LevelSelector(),
                                 title: Text(
                                   "Select Level",
