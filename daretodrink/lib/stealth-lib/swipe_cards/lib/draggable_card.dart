@@ -134,6 +134,8 @@ class _DraggableCardState extends State<DraggableCard>
         case SlideDirection.up:
           _slideUp();
           break;
+        default:
+          break;
       }
     }
   }

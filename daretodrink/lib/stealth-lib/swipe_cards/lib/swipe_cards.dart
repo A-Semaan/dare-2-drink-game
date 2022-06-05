@@ -131,6 +131,8 @@ class _SwipeCardsState extends State<SwipeCards> {
       case SlideDirection.up:
         currentMatch!.superLike();
         break;
+      default:
+        break;
     }
 
     if (widget.matchEngine._nextIndex! <
