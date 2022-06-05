@@ -1,4 +1,4 @@
-import 'package:daretodrink/helpers/shared_preferences_helper.dart';
+import 'package:daretodrink/helpers/shared-preferences-helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApplicationSettings {

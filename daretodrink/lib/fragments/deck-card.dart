@@ -1,7 +1,7 @@
 import 'package:daretodrink/data/application-properties.dart';
 import 'package:daretodrink/data/card-model.dart';
 import 'package:daretodrink/fragments/dare-2-drink-footer.dart';
-import 'package:daretodrink/globals.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:daretodrink/theme/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -10,10 +10,10 @@ class DeckCard extends StatefulWidget {
   const DeckCard({Key? key, required this.card}) : super(key: key);
 
   @override
-  State<DeckCard> createState() => Deck_CardState();
+  State<DeckCard> createState() => DeckCardState();
 }
 
-class Deck_CardState extends State<DeckCard> {
+class DeckCardState extends State<DeckCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -30,8 +30,9 @@ class Deck_CardState extends State<DeckCard> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  AutoSizeText(
                     widget.card.text,
+                    overflow: TextOverflow.clip,
                     textAlign: TextAlign.center,
                     style: MyTheme.getThemeData().textTheme.titleLarge,
                   ),
@@ -48,7 +49,7 @@ class Deck_CardState extends State<DeckCard> {
                               ? MyTheme.getThemeData().primaryColor
                               : MyTheme.secondaryColor)),
                   Text(
-                    widget.card.amount == null
+                    widget.card.amount == null || widget.card.amount == 0
                         ? "Fuck You"
                         : "Drink " + _getAmount(widget.card.amount!),
                     textAlign: TextAlign.center,

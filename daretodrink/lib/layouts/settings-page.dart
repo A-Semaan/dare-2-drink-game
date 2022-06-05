@@ -1,7 +1,7 @@
 import 'package:daretodrink/data/application_settings.dart';
 import 'package:daretodrink/fragments/dare-2-drink-footer.dart';
-import 'package:daretodrink/helpers/package_info_helper.dart';
-import 'package:daretodrink/layouts/personalized_dares.dart';
+import 'package:daretodrink/helpers/package-info-helper.dart';
+import 'package:daretodrink/layouts/personalized-dares.dart';
 import 'package:daretodrink/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

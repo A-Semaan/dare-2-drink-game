@@ -56,10 +56,19 @@ class _CardDeckPageState extends State<CardDeckPage>
               itemChanged: itemChanged,
               matchEngine: _cardsMatchEngine,
               onStackFinished: () {
-                initCardsDeck();
+                setState(() {
+                  initCardsDeck();
+                });
               },
-              itemBuilder: (BuildContext context, int index) {
-                return DeckCard(card: widget.cards[index]);
+              itemBuilder:
+                  (BuildContext context, SwipeItem item, Widget? widget) {
+                // int newIndex = index % widget.cards.length;
+                // if (index > widget.cards.length && newIndex == 0) {
+                //   setState(() {
+                //     initCardsDeck();
+                //   });
+                // }
+                return DeckCard(card: item.content);
               },
               upSwipeAllowed: false,
               fillSpace: true,
@@ -70,13 +79,22 @@ class _CardDeckPageState extends State<CardDeckPage>
                   itemChanged: itemChangedWildCard,
                   matchEngine: _wildCardsMatchEngine,
                   onStackFinished: () {
-                    initWildCardsDeck();
+                    setState(() {
+                      initWildCardsDeck();
+                    });
                   },
-                  itemBuilder: (BuildContext context, int index) {
-                    if (index % 2 == 0) {
+                  itemBuilder:
+                      (BuildContext context, SwipeItem item, Widget? widget) {
+                    // int newIndex = (index % (widget.wildCards.length * 2));
+                    // if (index > widget.wildCards.length && newIndex == 0) {
+                    //   setState(() {
+                    //     initWildCardsDeck();
+                    //   });
+                    // }
+                    if (item.content == null) {
                       return const DeckWildCard();
                     }
-                    return DeckCard(card: widget.wildCards[index]);
+                    return DeckCard(card: item.content);
                   },
                   upSwipeAllowed: false,
                   fillSpace: true,
@@ -106,11 +124,6 @@ class _CardDeckPageState extends State<CardDeckPage>
     widget.wildCards.shuffle();
     for (int i = 0; i < widget.wildCards.length; i++) {
       toReturn.add(SwipeItem(
-        content: null,
-        likeAction: likeActionWildCard,
-        nopeAction: nopeActionWildCard,
-      ));
-      toReturn.add(SwipeItem(
         content: widget.wildCards[i],
         likeAction: likeActionWildCard,
         nopeAction: nopeActionWildCard,
@@ -136,8 +149,8 @@ class _CardDeckPageState extends State<CardDeckPage>
     if (item.content != null) {
       return;
     }
+
     hideWildCard();
-    _wildCardsMatchEngine.currentItem!.like();
   }
 
   initCardsDeck() {
@@ -149,9 +162,9 @@ class _CardDeckPageState extends State<CardDeckPage>
 
   initWildCardsDeck() {
     _wildCardsSwipeItems = _getSwipeItemsFromWildCards();
-    _wildCardsMatchEngine = MatchEngine(
-      swipeItems: _wildCardsSwipeItems,
-    );
+
+    _wildCardsMatchEngine =
+        MatchEngine(swipeItems: _wildCardsSwipeItems, withInterCard: true);
   }
 
   initAnimation() {

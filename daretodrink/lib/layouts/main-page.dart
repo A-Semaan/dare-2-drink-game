@@ -1,7 +1,7 @@
 import 'package:daretodrink/data/application-properties.dart';
 import 'package:daretodrink/fragments/level-selector.dart';
 import 'package:daretodrink/globals.dart';
-import 'package:daretodrink/layouts/settings_page.dart';
+import 'package:daretodrink/layouts/settings-page.dart';
 import 'package:daretodrink/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;

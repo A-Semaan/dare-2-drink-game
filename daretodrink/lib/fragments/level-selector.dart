@@ -90,6 +90,7 @@ class _LevelSelectorState extends State<LevelSelector> {
         cards.add(element);
       }
     }
+    Navigator.of(context).pop();
     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
       return CardDeckPage(cards, wildCards);
     }));

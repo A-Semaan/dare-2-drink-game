@@ -1,7 +1,7 @@
 import 'package:daretodrink/db-ops/db-manager.dart';
 import 'package:daretodrink/globals.dart';
-import 'package:daretodrink/helpers/package_info_helper.dart';
-import 'package:daretodrink/helpers/shared_preferences_helper.dart';
+import 'package:daretodrink/helpers/package-info-helper.dart';
+import 'package:daretodrink/helpers/shared-preferences-helper.dart';
 import 'package:daretodrink/layouts/main-page.dart';
 import 'package:daretodrink/theme/theme.dart';
 import 'package:flutter/foundation.dart';

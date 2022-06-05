@@ -1,4 +1,4 @@
-import 'package:daretodrink/helpers/package_info_helper.dart';
+import 'package:daretodrink/helpers/package-info-helper.dart';
 import 'package:daretodrink/theme/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
