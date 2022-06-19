@@ -58,17 +58,27 @@ class _SettingsPageState extends State<SettingsPage> {
                 "Wild Card Chance",
                 style: MyTheme.listTileTitleTheme,
               ),
-              subtitle: Slider(
-                  label: _wildCardChance.toString(),
-                  min: 10,
-                  max: 100,
-                  divisions: 9,
-                  value: _wildCardChance.toDouble(),
-                  onChanged: (newValue) {
-                    setState(() {
-                      _wildCardChance = newValue.toInt();
-                    });
-                  }),
+              subtitle: Row(
+                children: [
+                  Expanded(
+                    child: Slider(
+                        label: _wildCardChance.toString(),
+                        min: 10,
+                        max: 100,
+                        divisions: 9,
+                        value: _wildCardChance.toDouble(),
+                        onChanged: (newValue) {
+                          setState(() {
+                            _wildCardChance = newValue.toInt();
+                          });
+                        }),
+                  ),
+                  Text(
+                    _wildCardChance.toString() + "%",
+                    style: Theme.of(context).textTheme.bodySmall,
+                  )
+                ],
+              ),
             ),
             ListTile(
               minVerticalPadding: 20,
@@ -87,6 +97,23 @@ class _SettingsPageState extends State<SettingsPage> {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const PersonalizedDares()));
               },
+            ),
+            ListTile(
+              minVerticalPadding: 20,
+              title: Text(
+                "Submit a Dare, and be featured!",
+                style: MyTheme.listTileTitleTheme
+                    .copyWith(color: Colors.grey[600]),
+              ),
+              subtitle: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Coming Soon!",
+                  style: MyTheme.listTileSubtitleTheme
+                      .copyWith(color: Colors.grey[700]),
+                ),
+              ),
+              onTap: null,
             ),
             const ListTile(
               onTap: null,

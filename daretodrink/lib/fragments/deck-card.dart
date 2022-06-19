@@ -32,13 +32,16 @@ class DeckCardState extends State<DeckCard> {
                 children: [
                   AutoSizeText(
                     widget.card.text,
+                    maxLines: 8,
                     overflow: TextOverflow.clip,
                     textAlign: TextAlign.center,
                     style: MyTheme.getThemeData().textTheme.titleLarge,
                   ),
-                  Text(
+                  AutoSizeText(
                     widget.card.subText ?? "",
+                    maxLines: 4,
                     textAlign: TextAlign.center,
+                    overflow: TextOverflow.clip,
                     style: MyTheme.getThemeData().textTheme.bodyMedium,
                   ),
                   Text(" ~ Or ~ ",
