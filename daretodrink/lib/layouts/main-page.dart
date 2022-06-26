@@ -168,17 +168,17 @@ class _MainPageState extends State<MainPage> {
                           text: "The Rules are as follow:\n\n",
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       TextSpan(
-                          text: "- The developper is not responsible for any loss of virginities, drunk drivers, angry girlfriends," +
-                              "nuclear war, or breakups.\n" +
+                          text: "- The developper is not responsible for any loss of v-cards, drunk drivers, angry girlfriends, " +
+                              "thermonuclear war, breakups, or getting fired bcz yo ass decided to play my game on a work night and got wasted.\n" +
                               "- Any dare can be done in a private room ;)\n" +
-                              "- Any ties in any condition can be settled with a coin flip. " +
-                              "(I.E. closest player with opposite sex are the same on your sides)\n" +
+                              "- Any ties in any condition can be settled with a coin flip, or a game of rock paper scissors. \n" +
                               "- Any given time in a dare can be extended to as long as the dare receivers want. However, " +
                               "a given time cannot be shrunk.\n" +
                               "- If you fail to end the dare at a time less than the one given YOU MUST RESTART.\n" +
+                              "- A Twisted dare/rule can be canceled by round of voting with the condition than 60% of the players vote in favor of the cancel.\n" +
                               "- If there are any couples in this game, you both agree to do the dares that you get otherwise, fuck you, " +
                               "you don't have to play\n" +
-                              "- Ofc, play responsibly and drink responsibly... and all the shit your parents would tell ya *rolls eyes*")
+                              "- Ofc, play responsibly and drink responsibly... whatever no one cares, shall we get to the game now? *rolls eyes*")
                     ]),
                   ),
                 ),
