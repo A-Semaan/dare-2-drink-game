@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:daretodrink/data/card-model.dart';
+import 'package:daretodrink/data/dare-card-model.dart';
+import 'package:daretodrink/data/twisted-card-model.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -47,22 +49,22 @@ class DBManager {
     await openDatabase("./assets/dare2drink.db");
   }
 
-  Future<int> insertCardIntoSideDares(CardModel card) async {
+  Future<int> insertCardIntoSideDares(DareCardModel card) async {
     return await db.insert("side_dares", card.toMap());
   }
 
-  Future<int> updateSideDare(CardModel card) async {
+  Future<int> updateSideDare(DareCardModel card) async {
     return await db.update("side_dares", card.toMap(),
         where: "_id = ?", whereArgs: [card.id]);
   }
 
-  Future<int> deleteSideDare(CardModel card) async {
+  Future<int> deleteSideDare(DareCardModel card) async {
     return await db
         .delete("side_dares", where: "_id = ?", whereArgs: [card.id]);
   }
 
-  Future<List<CardModel>> getCardsAndGenericsForLevel(Level level) async {
-    List<CardModel> cards = [];
+  Future<List<DareCardModel>> getCardsAndGenericsForLevel(Level level) async {
+    List<DareCardModel> cards = [];
     String table = "";
     switch (level) {
       case Level.beginner:
@@ -78,7 +80,7 @@ class DBManager {
 
     //get cards from table
     List<Map<String, Object?>> result = await db.query(table);
-    cards.addAll(result.map((e) => CardModel(
+    cards.addAll(result.map((e) => DareCardModel(
         getString(e["text"])!, getEnum<CardType>(e["type"])!,
         id: getInt(e["_id"]),
         amount: getInt(e["amount"]),
@@ -88,7 +90,7 @@ class DBManager {
     //get cards from side dares
     List<Map<String, Object?>> result2 = await db
         .query("side_dares", where: "level = ?", whereArgs: [level.toInt()]);
-    cards.addAll(result2.map((e) => CardModel(
+    cards.addAll(result2.map((e) => DareCardModel(
         getString(e["text"])!, getEnum<CardType>(e["type"])!,
         id: getInt(e["_id"]),
         amount: getInt(e["amount"]),
@@ -98,19 +100,34 @@ class DBManager {
     return cards;
   }
 
-  Future<List<CardModel>> getSideGenericsForLevel() async {
-    List<CardModel> cards = [];
+  Future<List<DareCardModel>> getAllSideDaresAndGenerics() async {
+    List<DareCardModel> cards = [];
 
     //get cards from side dares
     List<Map<String, Object?>> result2 = await db.query(
       "side_dares",
     );
-    cards.addAll(result2.map((e) => CardModel(
+    cards.addAll(result2.map((e) => DareCardModel(
         getString(e["text"])!, getEnum<CardType>(e["type"])!,
         id: getInt(e["_id"]),
         amount: getInt(e["amount"]),
         subText: getString(e["subtext"]),
         level: getEnum<Level>(e["level"]))));
+
+    return cards;
+  }
+
+  Future<List<TwistedCardModel>> getTwistedDares() async {
+    List<TwistedCardModel> cards = [];
+
+    //get cards from side dares
+    List<Map<String, Object?>> result2 = await db.query(
+      "twisted",
+    );
+    cards.addAll(result2.map((e) => TwistedCardModel(
+        getString(e["text"])!,
+        getBool(e["repeatable"])!,
+        id: getInt(e["_id"]),)));
 
     return cards;
   }

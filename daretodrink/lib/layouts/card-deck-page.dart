@@ -3,15 +3,20 @@ import 'dart:math';
 import 'package:daretodrink/data/application_settings.dart';
 import 'package:daretodrink/data/card-model.dart';
 import 'package:daretodrink/fragments/deck-card.dart';
+import 'package:daretodrink/fragments/deck-twisted-card.dart';
 import 'package:daretodrink/fragments/deck-wild-card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 
 class CardDeckPage extends StatefulWidget {
+  final Level level;
   final List<CardModel> cards;
   final List<CardModel> wildCards;
-  const CardDeckPage(this.cards, this.wildCards, {Key? key}) : super(key: key);
+  final List<CardModel>? twistedCards;
+  const CardDeckPage(this.cards, this.wildCards, this.level,
+      {Key? key, this.twistedCards})
+      : super(key: key);
 
   @override
   _CardDeckPageState createState() => _CardDeckPageState();
@@ -28,21 +33,32 @@ class _CardDeckPageState extends State<CardDeckPage>
   late MatchEngine _wildCardsMatchEngine;
   late List<SwipeItem> _wildCardsSwipeItems;
 
-  late AnimationController _animationController;
-  late Animation<Offset> _slideAnimation;
+  late AnimationController _wildAnimationController;
+  late Animation<Offset> _wildSlideAnimation;
+
+  late MatchEngine? _twistedCardsMatchEngine;
+  late List<SwipeItem>? _twistedCardsSwipeItems;
+
+  late AnimationController _twistedAnimationController;
+  late Animation<Offset> _twistedSlideAnimation;
+
+  bool _isTwistedEnabled = true;
 
   @override
   void initState() {
     initCardsDeck();
     initWildCardsDeck();
-    initAnimation();
+    initTwistedCardsDeck();
+    initWildAnimation();
+    initTwistedAnimation();
     super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _animationController.dispose();
+    _wildAnimationController.dispose();
+    _twistedAnimationController.dispose();
   }
 
   @override
@@ -74,7 +90,7 @@ class _CardDeckPageState extends State<CardDeckPage>
               fillSpace: true,
             ),
             SlideTransition(
-                position: _slideAnimation,
+                position: _wildSlideAnimation,
                 child: SwipeCards(
                   itemChanged: itemChangedWildCard,
                   matchEngine: _wildCardsMatchEngine,
@@ -93,6 +109,26 @@ class _CardDeckPageState extends State<CardDeckPage>
                     // }
                     if (item.content == null) {
                       return const DeckWildCard();
+                    }
+                    return DeckCard(card: item.content);
+                  },
+                  upSwipeAllowed: false,
+                  fillSpace: true,
+                )),
+            SlideTransition(
+                position: _twistedSlideAnimation,
+                child: SwipeCards(
+                  itemChanged: itemChangedTwistedCard,
+                  matchEngine: _wildCardsMatchEngine,
+                  onStackFinished: () {
+                    setState(() {
+                      initTwistedCardsDeck();
+                    });
+                  },
+                  itemBuilder:
+                      (BuildContext context, SwipeItem item, Widget? widget) {
+                    if (item.content == null) {
+                      return const DeckTwistedCard();
                     }
                     return DeckCard(card: item.content);
                   },
@@ -133,6 +169,20 @@ class _CardDeckPageState extends State<CardDeckPage>
     return toReturn;
   }
 
+  List<SwipeItem> _getSwipeItemsFromTwistedCards() {
+    List<SwipeItem> toReturn = [];
+    widget.twistedCards!.shuffle();
+    for (int i = 0; i < widget.twistedCards!.length; i++) {
+      toReturn.add(SwipeItem(
+        content: widget.twistedCards![i],
+        likeAction: likeActionTwistedCard,
+        nopeAction: nopeActionTwistedCard,
+      ));
+    }
+
+    return toReturn;
+  }
+
   likeAction() {}
 
   nopeAction() {}
@@ -141,8 +191,12 @@ class _CardDeckPageState extends State<CardDeckPage>
 
   nopeActionWildCard() {}
 
+  likeActionTwistedCard() {}
+
+  nopeActionTwistedCard() {}
+
   itemChanged(SwipeItem item, int index) {
-    showWildCard();
+    showWildOrTwistedCard();
   }
 
   itemChangedWildCard(SwipeItem item, int index) {
@@ -151,6 +205,14 @@ class _CardDeckPageState extends State<CardDeckPage>
     }
 
     hideWildCard();
+  }
+
+  itemChangedTwistedCard(SwipeItem item, int index) {
+    if (item.content != null) {
+      return;
+    }
+
+    hideTwistedCard();
   }
 
   initCardsDeck() {
@@ -167,15 +229,35 @@ class _CardDeckPageState extends State<CardDeckPage>
         MatchEngine(swipeItems: _wildCardsSwipeItems, withInterCard: true);
   }
 
-  initAnimation() {
-    _animationController = AnimationController(
+  initTwistedCardsDeck() {
+    if (widget.twistedCards != null) {
+      _twistedCardsSwipeItems = _getSwipeItemsFromWildCards();
+
+      _twistedCardsMatchEngine =
+          MatchEngine(swipeItems: _twistedCardsSwipeItems, withInterCard: true);
+    }
+  }
+
+  initWildAnimation() {
+    _wildAnimationController = AnimationController(
       duration: const Duration(milliseconds: 500),
       vsync: this,
     );
-    _slideAnimation =
+    _wildSlideAnimation =
         Tween<Offset>(begin: const Offset(1.5, 0), end: Offset.zero).animate(
             CurvedAnimation(
-                parent: _animationController, curve: Curves.bounceIn));
+                parent: _wildAnimationController, curve: Curves.bounceIn));
+  }
+
+  initTwistedAnimation() {
+    _twistedAnimationController = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+    _twistedSlideAnimation =
+        Tween<Offset>(begin: const Offset(-1.5, 0), end: Offset.zero).animate(
+            CurvedAnimation(
+                parent: _twistedAnimationController, curve: Curves.bounceIn));
   }
 
   bool shouldWildCardShow() {
@@ -184,15 +266,31 @@ class _CardDeckPageState extends State<CardDeckPage>
             ApplicationSettings.instance.wildCardChance;
   }
 
-  showWildCard() {
-    if (shouldWildCardShow()) {
-      _animationController
+  bool shouldTwistedCardShow() {
+    return widget.level == Level.hornyMFs &&
+        _isTwistedEnabled &&
+        wildCardCounter++ > 7 &&
+        Random().nextInt(MAX_RANDOM) <=
+            ApplicationSettings.instance.wildCardChance;
+  }
+
+  showWildOrTwistedCard() {
+    if (shouldTwistedCardShow()) {
+      _twistedAnimationController
+          .forward()
+          .then((value) => _twistedCardsMatchEngine!.currentItem!.superLike());
+    } else if (shouldWildCardShow()) {
+      _wildAnimationController
           .forward()
           .then((value) => _wildCardsMatchEngine.currentItem!.superLike());
     }
   }
 
   hideWildCard() {
-    _animationController.reverse();
+    _wildAnimationController.reverse();
+  }
+
+  hideTwistedCard() {
+    _twistedAnimationController.reverse();
   }
 }

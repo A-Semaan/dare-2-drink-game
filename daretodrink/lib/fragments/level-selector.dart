@@ -83,16 +83,20 @@ class _LevelSelectorState extends State<LevelSelector> {
     }
     List<CardModel> cards = [];
     List<CardModel> wildCards = [];
+    List<CardModel> twistedCards = [];
     for (var element in allCards) {
       if (element.type == CardType.generic) {
         wildCards.add(element);
-      } else {
+      } else if(element.type==CardType.twisted){
+        twistedCards.add(element);
+      }
+      else {
         cards.add(element);
       }
     }
     Navigator.of(context).pop();
     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-      return CardDeckPage(cards, wildCards);
+      return CardDeckPage(cards, wildCards, level, twistedCards: twistedCards);
     }));
   }
 }

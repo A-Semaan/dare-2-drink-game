@@ -4,11 +4,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+enum FooterType {
+  Dare2Drink_Default,
+  Dare2Drink_Gold,
+  Dare2Drink_WithVersion,
+  Twisted,
+}
+
 class Dare2DrinkFooter extends StatelessWidget {
-  final bool isDefault;
-  final bool withVersion;
-  const Dare2DrinkFooter(
-      {Key? key, this.isDefault = false, this.withVersion = false})
+  final FooterType type;
+  const Dare2DrinkFooter({Key? key, this.type = FooterType.Dare2Drink_Default})
       : super(key: key);
 
   static final TextStyle _style =
@@ -16,21 +21,29 @@ class Dare2DrinkFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<TextSpan> spans = [
-      TextSpan(
+    List<TextSpan> spans = [];
+
+    if (type == FooterType.Twisted) {
+      spans.add(TextSpan(
+          text: "Twisted Card",
+          style: GoogleFonts.getFont('Handlee',
+              textStyle: _style.copyWith(color: MyTheme.secondaryColor))));
+    } else {
+      bool isGold = type == FooterType.Dare2Drink_Gold;
+      spans.add(TextSpan(
           text: "Dare 2 Drink",
           style: GoogleFonts.getFont('Handlee',
               textStyle: _style.copyWith(
-                  color: isDefault
+                  color: isGold
                       ? MyTheme.secondaryColor
-                      : MyTheme.getThemeData().primaryColor)))
-    ];
+                      : MyTheme.getThemeData().primaryColor))));
 
-    if (withVersion) {
-      spans.add(TextSpan(
-          text: "  v " + PackageInfoHelper.instance.version,
-          style: GoogleFonts.getFont('Handlee',
-              textStyle: _style.copyWith(color: MyTheme.secondaryColor))));
+      if (type == FooterType.Dare2Drink_WithVersion) {
+        spans.add(TextSpan(
+            text: "  v " + PackageInfoHelper.instance.version,
+            style: GoogleFonts.getFont('Handlee',
+                textStyle: _style.copyWith(color: MyTheme.secondaryColor))));
+      }
     }
 
     return Padding(

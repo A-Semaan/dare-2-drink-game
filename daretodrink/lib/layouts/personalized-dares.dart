@@ -1,5 +1,6 @@
 import 'package:daretodrink/data/application-properties.dart';
 import 'package:daretodrink/data/card-model.dart';
+import 'package:daretodrink/data/dare-card-model.dart';
 import 'package:daretodrink/db-ops/db-manager.dart';
 import 'package:daretodrink/layouts/add-personalized-dare.dart';
 import 'package:daretodrink/theme/theme.dart';
@@ -36,7 +37,7 @@ class _PersonalizedDaresState extends State<PersonalizedDares> {
               setState(() {});
             });
           }),
-      body: FutureBuilder<List<CardModel>>(
+      body: FutureBuilder<List<DareCardModel>>(
           future: getData(),
           builder: (context, snapshot) {
             if (!snapshot.hasData &&
@@ -45,7 +46,7 @@ class _PersonalizedDaresState extends State<PersonalizedDares> {
                 child: CircularProgressIndicator(),
               );
             } else if (snapshot.hasData) {
-              List<CardModel> dares = snapshot.data!;
+              List<DareCardModel> dares = snapshot.data!;
 
               if (dares.isEmpty) {
                 return const Center(
@@ -169,7 +170,7 @@ class _PersonalizedDaresState extends State<PersonalizedDares> {
     );
   }
 
-  Future<List<CardModel>> getData() async {
-    return await DBManager.instance.getSideGenericsForLevel();
+  Future<List<DareCardModel>> getData() async {
+    return await DBManager.instance.getAllSideDaresAndGenerics();
   }
 }

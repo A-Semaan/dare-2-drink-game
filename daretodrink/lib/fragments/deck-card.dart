@@ -16,9 +16,14 @@ class DeckCard extends StatefulWidget {
 class DeckCardState extends State<DeckCard> {
   @override
   Widget build(BuildContext context) {
+    Color? _color = widget.card.type == CardType.generic 
+      ? MyTheme.secondaryColor 
+      : widget.card.type == CardType.twisted
+        ?MyTheme.twistedColor
+        :null;
+
     return Card(
-      color:
-          widget.card.type == CardType.generic ? MyTheme.secondaryColor : null,
+      color:_color,
       shape: RoundedRectangleBorder(
           side: BorderSide(color: MyTheme.getThemeData().primaryColor),
           borderRadius: ApplicationProperties.instance.borderRadius),
@@ -61,7 +66,7 @@ class DeckCardState extends State<DeckCard> {
                 ],
               ),
             ),
-            Dare2DrinkFooter(isDefault: widget.card.type == CardType.dare),
+            Dare2DrinkFooter(type: widget.card.type == CardType.dare? FooterType.Dare2Drink_Gold: FooterType.Dare2Drink_Gold),
           ],
         ),
       ),
