@@ -1,6 +1,7 @@
 import 'package:daretodrink/data/card-model.dart';
+import 'package:daretodrink/data/dare-card-model.dart';
+import 'package:daretodrink/data/twisted-card-model.dart';
 import 'package:daretodrink/db-ops/db-manager.dart';
-import 'package:daretodrink/globals.dart';
 import 'package:daretodrink/layouts/card-deck-page.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -83,16 +84,17 @@ class _LevelSelectorState extends State<LevelSelector> {
     }
     List<CardModel> cards = [];
     List<CardModel> wildCards = [];
-    List<CardModel> twistedCards = [];
+    List<TwistedCardModel>? twistedCards;
     for (var element in allCards) {
       if (element.type == CardType.generic) {
         wildCards.add(element);
-      } else if(element.type==CardType.twisted){
-        twistedCards.add(element);
-      }
-      else {
+      } else {
         cards.add(element);
       }
+    }
+    if(level==Level.hornyMFs){
+      twistedCards =
+        await DBManager.instance.getTwistedDares();
     }
     Navigator.of(context).pop();
     Navigator.of(context).push(MaterialPageRoute(builder: (context) {

@@ -31,6 +31,8 @@ class ApplicationSettings {
         .save(ApplicationSettingsEnum.wildCardChance.asString(), value);
     _wildCardChance = value;
   }
+
+  int get twistedCardChance => 10;
 }
 
 enum ApplicationSettingsEnum { wildCardChance }

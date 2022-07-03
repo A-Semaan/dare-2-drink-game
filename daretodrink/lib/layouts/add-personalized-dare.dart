@@ -1,11 +1,12 @@
 import 'package:daretodrink/data/card-model.dart';
+import 'package:daretodrink/data/dare-card-model.dart';
 import 'package:daretodrink/db-ops/db-manager.dart';
 import 'package:daretodrink/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AddPersonalizedDare extends StatefulWidget {
-  CardModel? card;
+  DareCardModel? card;
   AddPersonalizedDare({Key? key, this.card}) : super(key: key);
 
   @override
@@ -213,7 +214,7 @@ class _AddPersonalizedDareState extends State<AddPersonalizedDare> {
   }
 
   Future<int> save() async {
-    CardModel cardModel = CardModel(_title, _cardType!,
+    DareCardModel cardModel = DareCardModel(_title, _cardType!,
         subText: _subText, level: _level, amount: _amount);
     if (widget.card != null) {
       cardModel.id = widget.card!.id;

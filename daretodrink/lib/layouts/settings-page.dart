@@ -117,7 +117,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             const ListTile(
               onTap: null,
-              title: Center(child: Dare2DrinkFooter(withVersion: true)),
+              title: Center(child: Dare2DrinkFooter(type: FooterType.Dare2Drink_WithVersion,)),
             ),
           ],
         ),

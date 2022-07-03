@@ -1,5 +1,6 @@
 import 'package:daretodrink/data/application-properties.dart';
 import 'package:daretodrink/data/card-model.dart';
+import 'package:daretodrink/data/dare-card-model.dart';
 import 'package:daretodrink/fragments/dare-2-drink-footer.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:daretodrink/theme/theme.dart';
@@ -14,16 +15,53 @@ class DeckCard extends StatefulWidget {
 }
 
 class DeckCardState extends State<DeckCard> {
+
   @override
   Widget build(BuildContext context) {
-    Color? _color = widget.card.type == CardType.generic 
-      ? MyTheme.secondaryColor 
-      : widget.card.type == CardType.twisted
-        ?MyTheme.twistedColor
-        :null;
+    Color? _color = widget.card.type == CardType.generic
+        ? MyTheme.secondaryColor
+        : widget.card.type == CardType.twisted
+            ? MyTheme.twistedColor
+            : null;
+
+    Color? _orColor = widget.card.type == CardType.generic
+        ? MyTheme.getThemeData().primaryColor
+        : MyTheme.secondaryColor;
+
+    List<Widget> _widgets = [
+      AutoSizeText(
+        widget.card.text,
+        maxLines: 8,
+        overflow: TextOverflow.clip,
+        textAlign: TextAlign.center,
+        style: MyTheme.getThemeData().textTheme.titleLarge,
+      ),
+    ];
+
+    if(widget.card.type!=CardType.twisted){
+      DareCardModel _card = widget.card as DareCardModel;
+      _widgets.addAll([AutoSizeText(
+        _card.subText ?? "",
+        maxLines: 4,
+        textAlign: TextAlign.center,
+        overflow: TextOverflow.clip,
+        style: MyTheme.getThemeData().textTheme.bodyMedium,
+      ),
+      Text(" ~ Or ~ ",
+          textAlign: TextAlign.center,
+          style: _addColotToTextStyle(
+              MyTheme.getThemeData().textTheme.headlineMedium!, _orColor)),
+      Text(
+        _card.amount == null || _card.amount == 0
+            ? "Fuck You"
+            : "Drink " + _getAmount(_card.amount!),
+        textAlign: TextAlign.center,
+        style: MyTheme.getThemeData().textTheme.headlineMedium,
+      ),]);
+    }
 
     return Card(
-      color:_color,
+      color: _color,
       shape: RoundedRectangleBorder(
           side: BorderSide(color: MyTheme.getThemeData().primaryColor),
           borderRadius: ApplicationProperties.instance.borderRadius),
@@ -33,40 +71,18 @@ class DeckCardState extends State<DeckCard> {
           children: [
             Expanded(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  AutoSizeText(
-                    widget.card.text,
-                    maxLines: 8,
-                    overflow: TextOverflow.clip,
-                    textAlign: TextAlign.center,
-                    style: MyTheme.getThemeData().textTheme.titleLarge,
-                  ),
-                  AutoSizeText(
-                    widget.card.subText ?? "",
-                    maxLines: 4,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.clip,
-                    style: MyTheme.getThemeData().textTheme.bodyMedium,
-                  ),
-                  Text(" ~ Or ~ ",
-                      textAlign: TextAlign.center,
-                      style: _addColotToTextStyle(
-                          MyTheme.getThemeData().textTheme.headlineMedium!,
-                          widget.card.type == CardType.generic
-                              ? MyTheme.getThemeData().primaryColor
-                              : MyTheme.secondaryColor)),
-                  Text(
-                    widget.card.amount == null || widget.card.amount == 0
-                        ? "Fuck You"
-                        : "Drink " + _getAmount(widget.card.amount!),
-                    textAlign: TextAlign.center,
-                    style: MyTheme.getThemeData().textTheme.headlineMedium,
-                  ),
-                ],
+                mainAxisAlignment: widget.card.type == CardType.twisted
+                ? MainAxisAlignment.center
+                : MainAxisAlignment.spaceBetween,
+                children: _widgets,
               ),
             ),
-            Dare2DrinkFooter(type: widget.card.type == CardType.dare? FooterType.Dare2Drink_Gold: FooterType.Dare2Drink_Gold),
+            Dare2DrinkFooter(
+                type: widget.card.type == CardType.twisted
+                ? FooterType.Twisted
+                : widget.card.type == CardType.dare
+                    ? FooterType.Dare2Drink_Gold
+                    : FooterType.Dare2Drink_Default),
           ],
         ),
       ),

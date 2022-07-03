@@ -79,6 +79,8 @@ class MyTheme {
   static const Color _primaryColor = Color.fromARGB(
       255, 7, 88, 183); //Color.fromARGB(170, 250, 50, 50); //old color theme
   static const Color secondaryColor = Color.fromARGB(255, 212, 175, 55);
+  
+  static const Color twistedColor = Color.fromARGB(255, 255, 55, 55);
 
   static const TextStyle listTileTitleTheme =
       TextStyle(fontSize: 20, fontWeight: FontWeight.normal);

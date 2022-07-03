@@ -178,7 +178,15 @@ class _MainPageState extends State<MainPage> {
                               "- A Twisted dare/rule can be canceled by round of voting with the condition than 60% of the players vote in favor of the cancel.\n" +
                               "- If there are any couples in this game, you both agree to do the dares that you get otherwise, fuck you, " +
                               "you don't have to play\n" +
-                              "- Ofc, play responsibly and drink responsibly... whatever no one cares, shall we get to the game now? *rolls eyes*")
+                              "- Ofc, play responsibly and drink responsibly... whatever no one cares, shall we get to the game now? *rolls eyes*"),
+                      TextSpan(
+                          text: "Interested in pumping up your party?\n\n",
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      TextSpan(
+                          text:
+                              "Introducing Twisted Mode (only available in the highest level): When this is turned on, every swipe will have a 1% chance to show you a Twisted Card. "
+                              "These particular dares would be VERY spicy, and garanteed that since you're already on this mode, "
+                              "you will like them :p"),
                     ]),
                   ),
                 ),

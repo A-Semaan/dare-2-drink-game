@@ -8,11 +8,11 @@ class DareCardModel extends CardModel {
   DareCardModel(
     String text,
     CardType type, {
-    int id,
+    int? id,
     this.subText,
     this.level,
     this.amount,
-  });
+  }) : super(text, type, id: id);
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> toReturn = {
@@ -35,69 +35,10 @@ class DareCardModel extends CardModel {
     }
 
     if (type != null) {
-      toReturn["type"] = type!.asEnumString();
+      toReturn["type"] = type.asEnumString();
     }
 
     return toReturn;
-  }
-}
-
-enum CardType { dare, generic, twisted }
-
-extension CardTypeExtension on CardType {
-  static CardType fromString(String value) {
-    switch (value) {
-      case "DARE":
-        return CardType.dare;
-      case "GENERIC":
-        return CardType.generic;
-      default:
-        return CardType.dare;
-    }
-  }
-
-  static CardType fromInt(int value) {
-    switch (value) {
-      case 1:
-        return CardType.dare;
-      case 2:
-        return CardType.generic;
-      default:
-        return CardType.dare;
-    }
-  }
-
-  String asEnumString() {
-    switch (this) {
-      case CardType.dare:
-        return "DARE";
-      case CardType.generic:
-        return "GENERIC";
-      default:
-        return "";
-    }
-  }
-
-  String asString() {
-    switch (this) {
-      case CardType.dare:
-        return "Dare";
-      case CardType.generic:
-        return "Wild card";
-      default:
-        return "";
-    }
-  }
-
-  int toInt() {
-    switch (this) {
-      case CardType.dare:
-        return 1;
-      case CardType.generic:
-        return 2;
-      default:
-        return 1;
-    }
   }
 }
 

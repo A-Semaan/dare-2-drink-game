@@ -25,9 +25,10 @@ class Dare2DrinkFooter extends StatelessWidget {
 
     if (type == FooterType.Twisted) {
       spans.add(TextSpan(
-          text: "Twisted Card",
+          text: "Twisted",
           style: GoogleFonts.getFont('Handlee',
-              textStyle: _style.copyWith(color: MyTheme.secondaryColor))));
+              textStyle: _style.copyWith(
+                  color: MyTheme.secondaryColor))));
     } else {
       bool isGold = type == FooterType.Dare2Drink_Gold;
       spans.add(TextSpan(

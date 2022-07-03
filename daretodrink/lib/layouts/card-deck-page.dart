@@ -1,10 +1,14 @@
 import 'dart:math';
 
+import 'package:daretodrink/data/application-properties.dart';
 import 'package:daretodrink/data/application_settings.dart';
 import 'package:daretodrink/data/card-model.dart';
+import 'package:daretodrink/data/dare-card-model.dart';
+import 'package:daretodrink/data/twisted-card-model.dart';
 import 'package:daretodrink/fragments/deck-card.dart';
 import 'package:daretodrink/fragments/deck-twisted-card.dart';
 import 'package:daretodrink/fragments/deck-wild-card.dart';
+import 'package:daretodrink/fragments/twisted-card-label.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:swipe_cards/swipe_cards.dart';
@@ -13,7 +17,7 @@ class CardDeckPage extends StatefulWidget {
   final Level level;
   final List<CardModel> cards;
   final List<CardModel> wildCards;
-  final List<CardModel>? twistedCards;
+  final List<TwistedCardModel>? twistedCards;
   const CardDeckPage(this.cards, this.wildCards, this.level,
       {Key? key, this.twistedCards})
       : super(key: key);
@@ -25,7 +29,7 @@ class CardDeckPage extends StatefulWidget {
 class _CardDeckPageState extends State<CardDeckPage>
     with TickerProviderStateMixin {
   static const int MAX_RANDOM = 100;
-  int wildCardCounter = 0;
+  int _swipeCounter = 0;
 
   late MatchEngine _cardsMatchEngine;
   late List<SwipeItem> _cardsSwipeItems;
@@ -42,7 +46,8 @@ class _CardDeckPageState extends State<CardDeckPage>
   late AnimationController _twistedAnimationController;
   late Animation<Offset> _twistedSlideAnimation;
 
-  bool _isTwistedEnabled = true;
+  bool _isTwistedEnabled = false;
+  bool _userPromptedForTwisted = false;
 
   @override
   void initState() {
@@ -119,7 +124,7 @@ class _CardDeckPageState extends State<CardDeckPage>
                 position: _twistedSlideAnimation,
                 child: SwipeCards(
                   itemChanged: itemChangedTwistedCard,
-                  matchEngine: _wildCardsMatchEngine,
+                  matchEngine: _twistedCardsMatchEngine!,
                   onStackFinished: () {
                     setState(() {
                       initTwistedCardsDeck();
@@ -209,9 +214,11 @@ class _CardDeckPageState extends State<CardDeckPage>
 
   itemChangedTwistedCard(SwipeItem item, int index) {
     if (item.content != null) {
+      widget.twistedCards!.removeWhere((element) =>
+          element.id == (item.content as TwistedCardModel).id &&
+          !element.repeatable);
       return;
     }
-
     hideTwistedCard();
   }
 
@@ -231,7 +238,7 @@ class _CardDeckPageState extends State<CardDeckPage>
 
   initTwistedCardsDeck() {
     if (widget.twistedCards != null) {
-      _twistedCardsSwipeItems = _getSwipeItemsFromWildCards();
+      _twistedCardsSwipeItems = _getSwipeItemsFromTwistedCards();
 
       _twistedCardsMatchEngine =
           MatchEngine(swipeItems: _twistedCardsSwipeItems, withInterCard: true);
@@ -255,27 +262,30 @@ class _CardDeckPageState extends State<CardDeckPage>
       vsync: this,
     );
     _twistedSlideAnimation =
-        Tween<Offset>(begin: const Offset(-1.5, 0), end: Offset.zero).animate(
+        Tween<Offset>(begin: const Offset(1.5, 0), end: Offset.zero).animate(
             CurvedAnimation(
                 parent: _twistedAnimationController, curve: Curves.bounceIn));
   }
 
   bool shouldWildCardShow() {
-    return wildCardCounter++ > 7 &&
-        Random().nextInt(MAX_RANDOM) <=
-            ApplicationSettings.instance.wildCardChance;
+    return Random().nextInt(MAX_RANDOM) <=
+        ApplicationSettings.instance.wildCardChance;
   }
 
   bool shouldTwistedCardShow() {
     return widget.level == Level.hornyMFs &&
         _isTwistedEnabled &&
-        wildCardCounter++ > 7 &&
         Random().nextInt(MAX_RANDOM) <=
-            ApplicationSettings.instance.wildCardChance;
+            ApplicationSettings.instance.twistedCardChance;
   }
 
   showWildOrTwistedCard() {
-    if (shouldTwistedCardShow()) {
+    if (++_swipeCounter < 7) {
+      return false;
+    }
+    if (_swipeCounter >= 20 && !_userPromptedForTwisted && !_isTwistedEnabled) {
+      promptForTwisted();
+    } else if (shouldTwistedCardShow()) {
       _twistedAnimationController
           .forward()
           .then((value) => _twistedCardsMatchEngine!.currentItem!.superLike());
@@ -284,6 +294,49 @@ class _CardDeckPageState extends State<CardDeckPage>
           .forward()
           .then((value) => _wildCardsMatchEngine.currentItem!.superLike());
     }
+  }
+
+  promptForTwisted() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          AlertDialog dialog = AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: ApplicationProperties.instance.borderRadius),
+            title: const Text("Turn on Twisted Mode?"),
+            content: SizedBox(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: RichText(
+                  text: TextSpan(children: [
+                    TextSpan(
+                        text: "You seem to be enjoying this mode :p",
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
+                    
+                  ]),
+                ),
+              ),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _isTwistedEnabled = true;
+                    });
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("Hell Yeah!")),
+              OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("No WTF"))
+            ],
+          );
+
+          return dialog;
+        });
+    _userPromptedForTwisted = true;
   }
 
   hideWildCard() {
