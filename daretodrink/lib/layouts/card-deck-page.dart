@@ -68,79 +68,81 @@ class _CardDeckPageState extends State<CardDeckPage>
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> _cardStacks = [
+      SwipeCards(
+        itemChanged: itemChanged,
+        matchEngine: _cardsMatchEngine,
+        onStackFinished: () {
+          setState(() {
+            initCardsDeck();
+          });
+        },
+        itemBuilder: (BuildContext context, SwipeItem item, Widget? widget) {
+          // int newIndex = index % widget.cards.length;
+          // if (index > widget.cards.length && newIndex == 0) {
+          //   setState(() {
+          //     initCardsDeck();
+          //   });
+          // }
+          return DeckCard(card: item.content);
+        },
+        upSwipeAllowed: false,
+        fillSpace: true,
+      ),
+      SlideTransition(
+          position: _wildSlideAnimation,
+          child: SwipeCards(
+            itemChanged: itemChangedWildCard,
+            matchEngine: _wildCardsMatchEngine,
+            onStackFinished: () {
+              setState(() {
+                initWildCardsDeck();
+              });
+            },
+            itemBuilder:
+                (BuildContext context, SwipeItem item, Widget? widget) {
+              // int newIndex = (index % (widget.wildCards.length * 2));
+              // if (index > widget.wildCards.length && newIndex == 0) {
+              //   setState(() {
+              //     initWildCardsDeck();
+              //   });
+              // }
+              if (item.content == null) {
+                return const DeckWildCard();
+              }
+              return DeckCard(card: item.content);
+            },
+            upSwipeAllowed: false,
+            fillSpace: true,
+          )),
+    ];
+    if (widget.twistedCards != null) {
+      _cardStacks.add(SlideTransition(
+          position: _twistedSlideAnimation,
+          child: SwipeCards(
+            itemChanged: itemChangedTwistedCard,
+            matchEngine: _twistedCardsMatchEngine!,
+            onStackFinished: () {
+              setState(() {
+                initTwistedCardsDeck();
+              });
+            },
+            itemBuilder:
+                (BuildContext context, SwipeItem item, Widget? widget) {
+              if (item.content == null) {
+                return const DeckTwistedCard();
+              }
+              return DeckCard(card: item.content);
+            },
+            upSwipeAllowed: false,
+            fillSpace: true,
+          )));
+    }
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Center(
         child: Stack(
-          children: [
-            SwipeCards(
-              itemChanged: itemChanged,
-              matchEngine: _cardsMatchEngine,
-              onStackFinished: () {
-                setState(() {
-                  initCardsDeck();
-                });
-              },
-              itemBuilder:
-                  (BuildContext context, SwipeItem item, Widget? widget) {
-                // int newIndex = index % widget.cards.length;
-                // if (index > widget.cards.length && newIndex == 0) {
-                //   setState(() {
-                //     initCardsDeck();
-                //   });
-                // }
-                return DeckCard(card: item.content);
-              },
-              upSwipeAllowed: false,
-              fillSpace: true,
-            ),
-            SlideTransition(
-                position: _wildSlideAnimation,
-                child: SwipeCards(
-                  itemChanged: itemChangedWildCard,
-                  matchEngine: _wildCardsMatchEngine,
-                  onStackFinished: () {
-                    setState(() {
-                      initWildCardsDeck();
-                    });
-                  },
-                  itemBuilder:
-                      (BuildContext context, SwipeItem item, Widget? widget) {
-                    // int newIndex = (index % (widget.wildCards.length * 2));
-                    // if (index > widget.wildCards.length && newIndex == 0) {
-                    //   setState(() {
-                    //     initWildCardsDeck();
-                    //   });
-                    // }
-                    if (item.content == null) {
-                      return const DeckWildCard();
-                    }
-                    return DeckCard(card: item.content);
-                  },
-                  upSwipeAllowed: false,
-                  fillSpace: true,
-                )),
-            SlideTransition(
-                position: _twistedSlideAnimation,
-                child: SwipeCards(
-                  itemChanged: itemChangedTwistedCard,
-                  matchEngine: _twistedCardsMatchEngine!,
-                  onStackFinished: () {
-                    setState(() {
-                      initTwistedCardsDeck();
-                    });
-                  },
-                  itemBuilder:
-                      (BuildContext context, SwipeItem item, Widget? widget) {
-                    if (item.content == null) {
-                      return const DeckTwistedCard();
-                    }
-                    return DeckCard(card: item.content);
-                  },
-                  upSwipeAllowed: false,
-                  fillSpace: true,
-                ))
-          ],
+          children: _cardStacks,
         ),
       ),
     );
@@ -283,7 +285,7 @@ class _CardDeckPageState extends State<CardDeckPage>
     if (++_swipeCounter < 7) {
       return false;
     }
-    if (_swipeCounter >= 20 && !_userPromptedForTwisted && !_isTwistedEnabled) {
+    if (widget.level == Level.hornyMFs && _swipeCounter >= 20 && !_userPromptedForTwisted && !_isTwistedEnabled) {
       promptForTwisted();
     } else if (shouldTwistedCardShow()) {
       _twistedAnimationController
@@ -311,8 +313,10 @@ class _CardDeckPageState extends State<CardDeckPage>
                   text: TextSpan(children: [
                     TextSpan(
                         text: "You seem to be enjoying this mode :p",
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
-                    
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(fontWeight: FontWeight.bold)),
                   ]),
                 ),
               ),

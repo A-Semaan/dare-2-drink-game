@@ -168,7 +168,7 @@ class _MainPageState extends State<MainPage> {
                           text: "The Rules are as follow:\n\n",
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       TextSpan(
-                          text: "- The developper is not responsible for any loss of v-cards, drunk drivers, angry girlfriends, " +
+                          text: "- The developper is not responsible for any drunk drivers, angry girlfriends, " +
                               "thermonuclear war, breakups, or getting fired bcz yo ass decided to play my game on a work night and got wasted.\n" +
                               "- Any dare can be done in a private room ;)\n" +
                               "- Any ties in any condition can be settled with a coin flip, or a game of rock paper scissors. \n" +
@@ -184,7 +184,7 @@ class _MainPageState extends State<MainPage> {
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       TextSpan(
                           text:
-                              "Introducing Twisted Mode (only available in the highest level): When this is turned on, every swipe will have a 1% chance to show you a Twisted Card. "
+                              "Introducing Twisted Mode (only available in the highest level): When this is turned on, every swipe will have a 7% chance to show you a Twisted Card. "
                               "These particular dares would be VERY spicy, and garanteed that since you're already on this mode, "
                               "you will like them :p"),
                     ]),

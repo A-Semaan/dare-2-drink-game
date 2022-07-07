@@ -1,3 +1,4 @@
+import 'package:daretodrink/data/application_settings.dart';
 import 'package:daretodrink/helpers/package-info-helper.dart';
 import 'package:daretodrink/theme/theme.dart';
 import 'package:flutter/cupertino.dart';
@@ -41,7 +42,7 @@ class Dare2DrinkFooter extends StatelessWidget {
 
       if (type == FooterType.Dare2Drink_WithVersion) {
         spans.add(TextSpan(
-            text: "  v " + PackageInfoHelper.instance.version,
+            text: "  v " + PackageInfoHelper.instance.version + ", DB v "+ApplicationSettings.instance.activeDatabaseVersion,
             style: GoogleFonts.getFont('Handlee',
                 textStyle: _style.copyWith(color: MyTheme.secondaryColor))));
       }

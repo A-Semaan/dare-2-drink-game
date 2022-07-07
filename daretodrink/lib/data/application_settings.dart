@@ -21,7 +21,7 @@ class ApplicationSettings {
     int? chance = SharedPreferencesHelper.instance
         .read<int>(ApplicationSettingsEnum.wildCardChance.asString());
 
-    _wildCardChance = chance ?? 40;
+    _wildCardChance = chance ?? 30;
 
     return _wildCardChance;
   }
@@ -32,7 +32,11 @@ class ApplicationSettings {
     _wildCardChance = value;
   }
 
-  int get twistedCardChance => 10;
+  int get twistedCardChance => 7;
+
+  String get databaseVersion=>"1.1";
+
+  String activeDatabaseVersion="";
 }
 
 enum ApplicationSettingsEnum { wildCardChance }

@@ -218,9 +218,9 @@ class _AddPersonalizedDareState extends State<AddPersonalizedDare> {
         subText: _subText, level: _level, amount: _amount);
     if (widget.card != null) {
       cardModel.id = widget.card!.id;
-      return await DBManager.instance.updateSideDare(cardModel);
+      return (await DBManager.instance.updateSideDare(cardModel))??0;
     } else {
-      return await DBManager.instance.insertCardIntoSideDares(cardModel);
+      return (await DBManager.instance.insertCardIntoSideDares(cardModel))??0;
     }
   }
 

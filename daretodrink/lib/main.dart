@@ -75,7 +75,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Future _initAndConnect() async {
     try {
       await DBManager.instance.init();
-      await DBManager.instance.connectToDataBase();
       return true;
     } catch (e) {
       print(e);
