@@ -150,7 +150,7 @@ class _CardDeckPageState extends State<CardDeckPage>
 
   List<SwipeItem> _getSwipeItemsFromCards() {
     List<SwipeItem> toReturn = [];
-    widget.cards.shuffle();
+    widget.cards.shuffle(Random());
     for (int i = 0; i < widget.cards.length; i++) {
       toReturn.add(SwipeItem(
         content: widget.cards[i],
@@ -164,7 +164,7 @@ class _CardDeckPageState extends State<CardDeckPage>
 
   List<SwipeItem> _getSwipeItemsFromWildCards() {
     List<SwipeItem> toReturn = [];
-    widget.wildCards.shuffle();
+    widget.wildCards.shuffle(Random());
     for (int i = 0; i < widget.wildCards.length; i++) {
       toReturn.add(SwipeItem(
         content: widget.wildCards[i],
@@ -178,7 +178,7 @@ class _CardDeckPageState extends State<CardDeckPage>
 
   List<SwipeItem> _getSwipeItemsFromTwistedCards() {
     List<SwipeItem> toReturn = [];
-    widget.twistedCards!.shuffle();
+    widget.twistedCards!.shuffle(Random());
     for (int i = 0; i < widget.twistedCards!.length; i++) {
       toReturn.add(SwipeItem(
         content: widget.twistedCards![i],
@@ -240,6 +240,7 @@ class _CardDeckPageState extends State<CardDeckPage>
 
   initTwistedCardsDeck() {
     if (widget.twistedCards != null) {
+      _isTwistedEnabled = ApplicationSettings.instance.twistedEnabledByDefault;
       _twistedCardsSwipeItems = _getSwipeItemsFromTwistedCards();
 
       _twistedCardsMatchEngine =
@@ -285,7 +286,10 @@ class _CardDeckPageState extends State<CardDeckPage>
     if (++_swipeCounter < 7) {
       return false;
     }
-    if (widget.level == Level.hornyMFs && _swipeCounter >= 20 && !_userPromptedForTwisted && !_isTwistedEnabled) {
+    if (widget.level == Level.hornyMFs &&
+        _swipeCounter >= 20 &&
+        !_userPromptedForTwisted &&
+        !_isTwistedEnabled) {
       promptForTwisted();
     } else if (shouldTwistedCardShow()) {
       _twistedAnimationController

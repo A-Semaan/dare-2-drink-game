@@ -1,5 +1,7 @@
 library swipe_cards;
 
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:swipe_cards/draggable_card.dart';
@@ -209,7 +211,7 @@ class MatchEngine extends ChangeNotifier {
       return _swipeItems![_currentItemIndex!];
     } else {
       _currentItemIndex = 0;
-      _mainSwipeItems!.shuffle();
+      _mainSwipeItems!.shuffle(Random());
       _loadSwipeItems();
       return _swipeItems![_currentItemIndex!];
     }

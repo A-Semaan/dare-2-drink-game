@@ -13,6 +13,10 @@ class ApplicationSettings {
 
   int _wildCardChance = 0;
 
+  bool? _stonedEnabled;
+
+  bool? _twistedEnabledByDefault;
+
   int get wildCardChance {
     if (_wildCardChance != 0) {
       return _wildCardChance;
@@ -32,20 +36,66 @@ class ApplicationSettings {
     _wildCardChance = value;
   }
 
+  bool get stonedEnabled {
+    if (_stonedEnabled != null) {
+      return _stonedEnabled!;
+    }
+
+    bool? enabled = SharedPreferencesHelper.instance
+        .read<bool>(ApplicationSettingsEnum.stonedEnabled.asString());
+
+    _stonedEnabled = enabled ?? false;
+
+    return _stonedEnabled!;
+  }
+
+  set stonedEnabled(bool value) {
+    SharedPreferencesHelper.instance
+        .save(ApplicationSettingsEnum.stonedEnabled.asString(), value);
+    _stonedEnabled = value;
+  }
+
+  bool get twistedEnabledByDefault {
+    if (_twistedEnabledByDefault != null) {
+      return _twistedEnabledByDefault!;
+    }
+
+    bool? enabled = SharedPreferencesHelper.instance
+        .read<bool>(ApplicationSettingsEnum.twistedEnabledByDefault.asString());
+
+    _twistedEnabledByDefault = enabled ?? false;
+
+    return _twistedEnabledByDefault!;
+  }
+
+  set twistedEnabledByDefault(bool value) {
+    SharedPreferencesHelper.instance.save(
+        ApplicationSettingsEnum.twistedEnabledByDefault.asString(), value);
+    _twistedEnabledByDefault = value;
+  }
+
   int get twistedCardChance => 7;
 
-  String get databaseVersion=>"1.1";
+  String get databaseVersion => "1.1";
 
-  String activeDatabaseVersion="";
+  String activeDatabaseVersion = "";
 }
 
-enum ApplicationSettingsEnum { wildCardChance }
+enum ApplicationSettingsEnum {
+  wildCardChance,
+  stonedEnabled,
+  twistedEnabledByDefault
+}
 
 extension ApplicationSettingsEnumExtension on ApplicationSettingsEnum {
   String asString() {
     switch (this) {
       case ApplicationSettingsEnum.wildCardChance:
         return "WildCardChance";
+      case ApplicationSettingsEnum.stonedEnabled:
+        return "stonedEnabled";
+      case ApplicationSettingsEnum.twistedEnabledByDefault:
+        return "twistedEnabledByDefault";
       default:
         return "";
     }

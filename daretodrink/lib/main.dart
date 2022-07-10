@@ -14,7 +14,7 @@ void main() {
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays:  []);
+  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
   runApp(const MyApp());
 }
 

@@ -29,30 +29,31 @@ class DBManager {
       FileSystemEntityType type = await FileSystemEntity.type(path);
       if (type == FileSystemEntityType.notFound) {
         await _executeCopyDb(path);
-        ApplicationSettings.instance.activeDatabaseVersion = await getDatabaseVersion();
-      }
-      else{
+        ApplicationSettings.instance.activeDatabaseVersion =
+            await getDatabaseVersion();
+      } else {
         String dbVersion = await getDatabaseVersion();
         String internalDbVersion = ApplicationSettings.instance.databaseVersion;
-        if(double.parse(dbVersion)<double.parse(internalDbVersion)){
+        if (double.parse(dbVersion) < double.parse(internalDbVersion)) {
           await _executeCopyDb(path);
         }
-        ApplicationSettings.instance.activeDatabaseVersion = await getDatabaseVersion();
+        ApplicationSettings.instance.activeDatabaseVersion =
+            await getDatabaseVersion();
       }
     } catch (ex) {
       print(ex);
     }
   }
 
-  _executeCopyDb(String path)async{
+  _executeCopyDb(String path) async {
     // Load database from asset and copy
-        ByteData data = await rootBundle.load(join('assets', 'dare2drink.db'));
-        List<int> bytes =
-            data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+    ByteData data = await rootBundle.load(join('assets', 'dare2drink.db'));
+    List<int> bytes =
+        data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 
-        // Save copied asset to documents
-        File file = File(path);
-        await file.writeAsBytes(bytes);
+    // Save copied asset to documents
+    File file = File(path);
+    await file.writeAsBytes(bytes);
   }
 
   Future<Database?> _connectToDataBase() async {
@@ -172,11 +173,34 @@ class DBManager {
     return cards;
   }
 
+  Future<List<DareCardModel>> getStonedDares(Level level) async {
+    List<DareCardModel> cards = [];
+
+    //get cards from side dares
+    List<Map<String, Object?>>? result =
+        await _executeDbOperation<List<Map<String, Object?>>>(<List>(db) => {
+              db.query(
+                "Stoned",
+              )
+            });
+    if (result != null) {
+      cards.addAll(result.map((e) => DareCardModel(
+          getString(e["text"])!, getEnum<CardType>(e["type"])!,
+          id: getInt(e["_id"]),
+          amount: getInt(e["amount"]),
+          subText: getString(e["subtext"]),
+          level: level)));
+    }
+
+    return cards;
+  }
+
   Future<String> getDatabaseVersion() async {
     try {
       List<Map<String, Object?>>? result =
-          await _executeDbOperation<List<Map<String, Object?>>>(
-              <List>(db) => {db.query("database_version", columns:["version"])});
+          await _executeDbOperation<List<Map<String, Object?>>>(<List>(db) => {
+                db.query("database_version", columns: ["version"])
+              });
       if (result == null || result.isEmpty) {
         return "1.0";
       } else {
@@ -204,7 +228,7 @@ class DBManager {
   }
 
   int? getInt(Object? object) {
-    if (object == null) {
+    if (object == null || object.toString() == "") {
       return null;
     }
     return int.parse(getString(object)!);

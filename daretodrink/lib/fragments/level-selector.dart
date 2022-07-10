@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:daretodrink/data/application_settings.dart';
 import 'package:daretodrink/data/card-model.dart';
 import 'package:daretodrink/data/dare-card-model.dart';
 import 'package:daretodrink/data/twisted-card-model.dart';
@@ -78,10 +81,17 @@ class _LevelSelectorState extends State<LevelSelector> {
   _getCardsAndRedirect(Level level) async {
     List<CardModel> allCards =
         await DBManager.instance.getCardsAndGenericsForLevel(level);
+    if (ApplicationSettings.instance.stonedEnabled) {
+      List<CardModel> stoned = await DBManager.instance.getStonedDares(level);
+      allCards.addAll(stoned);
+      allCards.shuffle(Random());
+    }
+
     if (allCards.isEmpty) {
       Fluttertoast.showToast(msg: "This mode does not have any dares");
       return;
     }
+
     List<CardModel> cards = [];
     List<CardModel> wildCards = [];
     List<TwistedCardModel>? twistedCards;
@@ -92,9 +102,8 @@ class _LevelSelectorState extends State<LevelSelector> {
         cards.add(element);
       }
     }
-    if(level==Level.hornyMFs){
-      twistedCards =
-        await DBManager.instance.getTwistedDares();
+    if (level == Level.hornyMFs) {
+      twistedCards = await DBManager.instance.getTwistedDares();
     }
     Navigator.of(context).pop();
     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
